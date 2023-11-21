@@ -2,6 +2,9 @@
 #include <GLFW/glfw3.h>
 #include "shaderHelper.h"
 
+#include "vertexBuffer.h"
+#include "indexBuffer.h"
+
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void processInput(GLFWwindow *window);
 
@@ -12,13 +15,7 @@ float vertices[] = {
     -0.5f,  0.5f, 0.0f  // top left
 };
 
-float otherVertices[] = {
-     0.5f,  0.5f, 0.0f,  // top right
-     0.5f, -0.5f, 0.0f,  // bottom right
-    -0.5f,  0.5f, 0.0f,  // top left 
-};
-
-unsigned int indices[] = {
+GLuint indices[] = {
     0, 1, 3,    // first triangle
     1, 2, 3     // second triangle
 };
@@ -94,15 +91,8 @@ int main()
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
 
-    unsigned int VBO;
-    glGenBuffers(1, &VBO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-    unsigned int EBO;
-    glGenBuffers(1, &EBO);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+    VertexBuffer *vbo = new VertexBuffer(vertices, sizeof(vertices));
+    IndexBuffer *ibo = new IndexBuffer(indices, 6);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
@@ -128,6 +118,9 @@ int main()
     }
 
     glBindVertexArray(0);
+
+    delete(vbo);
+    delete(ibo);
 
     glfwTerminate();
     return 0;
