@@ -4,6 +4,7 @@
 
 #include "vertexBuffer.h"
 #include "indexBuffer.h"
+#include "vertexArray.h"
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void processInput(GLFWwindow *window);
@@ -87,9 +88,7 @@ int main()
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
 
-    unsigned int VAO;
-    glGenVertexArrays(1, &VAO);
-    glBindVertexArray(VAO);
+    VertexArray *vao = new VertexArray();
 
     VertexBuffer *vbo = new VertexBuffer(vertices, sizeof(vertices));
     IndexBuffer *ibo = new IndexBuffer(indices, 6);
@@ -99,7 +98,7 @@ int main()
 
     glUseProgram(shaderProgram);
 
-    glBindVertexArray(VAO);
+    vao->bind();
 
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
