@@ -1,15 +1,10 @@
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <math.h>
+#include "window.h"
 #include "shader.h"
 
 #include "vertexBuffer.h"
 #include "indexBuffer.h"
 #include "vertexArray.h"
 #include "vertexBufferLayout.h"
-
-void framebuffer_size_callback(GLFWwindow *window, int width, int height);
-void processInput(GLFWwindow *window);
 
 // float vertices[] = {
 //      0.5f,  0.5f, 0.0f, // top right
@@ -36,28 +31,7 @@ GLuint indices[] = {
 
 int main()
 {
-    glfwInit();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-    GLFWwindow *window = glfwCreateWindow(800, 600, "LearnOpenGL", NULL, NULL);
-    if (window == NULL)
-    {
-        std::cout << "Failed to create GLFW window" << std::endl;
-        glfwTerminate();
-        return -1;
-    }
-    glfwMakeContextCurrent(window);
-
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-    {
-        std::cout << "Failed to initialise GLAD" << std::endl;
-        return -1;
-    }
-
-    glViewport(0, 0, 800, 600);
-    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    Window *window = new Window(800, 600, "LearnOpenGL");
 
     Shader *shader = new Shader("shaders/vertex.glsl", "shaders/fragment.glsl");
 
@@ -73,45 +47,27 @@ int main()
 
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-    while (!glfwWindowShouldClose(window))
+    while (window->isOpen())
     {
-        processInput(window);
+        window->processInput();
 
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
         shader->use();
-
-        shader->setFloat("offset", 0.f);
-
         vao->bind();
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-        glfwSwapBuffers(window);
-        glfwPollEvents();
+        window->update();
     }
-
-    glBindVertexArray(0);
 
     delete(vbo);
     delete(ibo);
     delete(vbl);
     delete(vao);
     delete(shader);
+    delete(window);
 
     glfwTerminate();
     return 0;
-}
-
-void framebuffer_size_callback(GLFWwindow *window, int width, int height)
-{
-    glViewport(0, 0, width, height);
-}
-
-void processInput(GLFWwindow *window)
-{
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-    {
-        glfwSetWindowShouldClose(window, GLFW_TRUE);
-    }
 }
