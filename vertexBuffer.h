@@ -1,3 +1,5 @@
+#pragma once
+
 #include "renderer.h"
 
 class VertexBuffer
@@ -8,6 +10,6 @@ class VertexBuffer
     public:
         VertexBuffer(const void *data, GLuint size);
         ~VertexBuffer();
-        void bind();
-        void unbind();
+        void bind() const;
+        void unbind() const;
 };
