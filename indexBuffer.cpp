@@ -2,20 +2,21 @@
 #include <iostream>
 
 IndexBuffer::IndexBuffer(const GLuint *data, const GLuint count)
+    : m_Count(count)
 {
-    glGenBuffers(1, &this->id);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->id);
+    glGenBuffers(1, &m_ID);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ID);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(GLuint), data, GL_STATIC_DRAW);
 }
 
 IndexBuffer::~IndexBuffer()
 {
-    glDeleteBuffers(1, &this->id);
+    glDeleteBuffers(1, &m_ID);
 }
 
 void IndexBuffer::bind()
 {
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->id);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ID);
 }
 
 void IndexBuffer::unbind()

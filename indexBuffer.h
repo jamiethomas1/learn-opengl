@@ -4,12 +4,15 @@
 
 class IndexBuffer
 {
-    private:
-        GLuint id;
+private:
+    GLuint m_ID;
+    GLuint m_Count;
 
-    public:
-        IndexBuffer(const GLuint *data, const GLuint count);
-        ~IndexBuffer();
-        void bind();
-        void unbind();
+public:
+    IndexBuffer(const GLuint *data, const GLuint count);
+    ~IndexBuffer();
+    void bind();
+    void unbind();
+
+    const GLuint getCount() const { return m_Count; }
 };

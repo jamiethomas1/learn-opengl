@@ -1,6 +1,6 @@
+#include "renderer.h"
 #include "window.h"
 #include "shader.h"
-
 #include "vertexBuffer.h"
 #include "indexBuffer.h"
 #include "vertexArray.h"
@@ -33,6 +33,8 @@ int main()
 {
     Window *window = new Window(800, 600, "LearnOpenGL");
 
+    Renderer *renderer = new Renderer();
+
     Shader *shader = new Shader("shaders/vertex.glsl", "shaders/fragment.glsl");
 
     VertexArray *vao = new VertexArray();
@@ -50,13 +52,9 @@ int main()
     while (window->isOpen())
     {
         window->processInput();
-
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        shader->use();
-        vao->bind();
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        renderer->clear();
+        
+        renderer->draw(vao, ibo, shader);
 
         window->update();
     }
@@ -67,6 +65,7 @@ int main()
     delete(vao);
     delete(shader);
     delete(window);
+    delete(renderer);
 
     glfwTerminate();
     return 0;

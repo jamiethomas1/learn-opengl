@@ -4,12 +4,12 @@
 
 class VertexBuffer
 {
-    private:
-        GLuint id;
+private:
+    GLuint m_ID;
 
-    public:
-        VertexBuffer(const void *data, GLuint size);
-        ~VertexBuffer();
-        void bind() const;
-        void unbind() const;
+public:
+    VertexBuffer(const void *data, GLuint size);
+    ~VertexBuffer();
+    void bind() const;
+    void unbind() const;
 };

@@ -4,9 +4,10 @@
 #include "vertexBuffer.h"
 #include "vertexBufferLayout.h"
 
-class VertexArray {
+class VertexArray
+{
 private:
-    GLuint id;
+    GLuint m_ID;
 
 public:
     VertexArray();
