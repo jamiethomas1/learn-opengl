@@ -82,9 +82,7 @@ int main()
 
         shader->use();
 
-        float timeValue = glfwGetTime();
-        float greenValue = (sin(timeValue) / 2.f) + 0.5f;
-        shader->setFloat("codeColor", greenValue);
+        shader->setFloat("offset", 0.f);
 
         vao->bind();
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
