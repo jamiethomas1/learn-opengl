@@ -1,3 +1,5 @@
+#pragma once
+
 #include <iostream>
 
 char* parseShader(const char *path) {
