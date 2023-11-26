@@ -5,6 +5,7 @@
 #include "vertexBuffer.h"
 #include "indexBuffer.h"
 #include "vertexArray.h"
+#include "vertexBufferLayout.h"
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void processInput(GLFWwindow *window);
@@ -93,8 +94,9 @@ int main()
     VertexBuffer *vbo = new VertexBuffer(vertices, sizeof(vertices));
     IndexBuffer *ibo = new IndexBuffer(indices, 6);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
+    VertexBufferLayout *vbl = new VertexBufferLayout();
+    vbl->push(GL_FLOAT, 3);
+    vao->addBuffer(*vbo, *vbl);
 
     glUseProgram(shaderProgram);
 
