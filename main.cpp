@@ -51,6 +51,8 @@ int main()
      * Temporary implementation of textures
     */
 
+    stbi_set_flip_vertically_on_load(true);
+
     unsigned int texture;
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
@@ -73,6 +75,28 @@ int main()
 
     stbi_image_free(data);
 
+    unsigned int awesomeTexture;
+    glGenTextures(1, &awesomeTexture);
+    glBindTexture(GL_TEXTURE_2D, awesomeTexture);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    data = stbi_load("res/awesomeface.png", &width, &height, &nrChannels, 0);
+
+    if (data) {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    } else {
+        std::cout << "Failed to load texture: " << "res/awesomeface.png" << std::endl;
+    }
+
+    shader->use();
+    shader->setInt("tex1", 0);
+    shader->setInt("tex2", 1);
+
     /**
         * Push vertices & add buffer to vertex array
     */
@@ -93,7 +117,10 @@ int main()
         float time = glfwGetTime();
         shader->setFloat("time", time);
 
+        glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, awesomeTexture);
 
         renderer->draw(vao, ibo, shader);
 
