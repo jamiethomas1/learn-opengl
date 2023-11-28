@@ -1,4 +1,4 @@
-#include "stb_image.h"
+//#include "stb_image.h"
 
 #include "renderer.h"
 #include "window.h"
@@ -7,6 +7,7 @@
 #include "indexBuffer.h"
 #include "vertexArray.h"
 #include "vertexBufferLayout.h"
+#include "texture.h"
 
 // float vertices[] = {
 //     // positions
@@ -46,55 +47,11 @@ int main()
     IndexBuffer *ibo = new IndexBuffer(indices, 6);
     VertexBufferLayout *vbl = new VertexBufferLayout();
 
-
-    /**
-     * Temporary implementation of textures
-    */
-
-    stbi_set_flip_vertically_on_load(true);
-
-    unsigned int texture;
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture);
-
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-    int width, height, nrChannels;
-    const char *path = "res/container.jpg";
-    unsigned char *data = stbi_load(path, &width, &height, &nrChannels, 0);
-
-    if (data) {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-        glGenerateMipmap(GL_TEXTURE_2D);
-    } else {
-        std::cout << "Failed to load texture: " << path << std::endl;
-    }
-
-    stbi_image_free(data);
-
-    unsigned int awesomeTexture;
-    glGenTextures(1, &awesomeTexture);
-    glBindTexture(GL_TEXTURE_2D, awesomeTexture);
-
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-    data = stbi_load("res/awesomeface.png", &width, &height, &nrChannels, 0);
-
-    if (data) {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-        glGenerateMipmap(GL_TEXTURE_2D);
-    } else {
-        std::cout << "Failed to load texture: " << "res/awesomeface.png" << std::endl;
-    }
+    Texture *crateTexture = new Texture("res/container.jpg", GL_TEXTURE0, GL_RGB);
+    Texture *awesomeTexture = new Texture("res/awesomeface.png", GL_TEXTURE1, GL_RGBA);
 
     shader->use();
-    shader->setInt("tex1", 0);
+    shader->setInt("tex", 0);
     shader->setInt("tex2", 1);
 
     /**
@@ -117,23 +74,23 @@ int main()
         float time = glfwGetTime();
         shader->setFloat("time", time);
 
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, texture);
-        glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, awesomeTexture);
+        crateTexture->bind();
+        awesomeTexture->bind();
 
         renderer->draw(vao, ibo, shader);
 
         window->update();
     }
 
-    delete(vbo);
-    delete(ibo);
+    delete(awesomeTexture);
+    delete(crateTexture);
     delete(vbl);
+    delete(ibo);
+    delete(vbo);
     delete(vao);
     delete(shader);
-    delete(window);
     delete(renderer);
+    delete(window);
 
     glfwTerminate();
     return 0;
