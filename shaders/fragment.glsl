@@ -19,5 +19,5 @@ void main()
     float sin3Time = sin(4*(time + pi*2/3)) / 4 + 0.75;
     //FragColor = texture(tex, TexCoord) * vec4(vertexColor.r * sinTime, vertexColor.g * sin2Time, vertexColor.b * sin3Time, 1.);
     vec4 reversedFace = texture(tex2, TexCoord * vec2(-1., 1));
-    FragColor = mix(texture(tex, TexCoord), texture(tex2, TexCoord), 0.2);
+    FragColor = mix(texture(tex, TexCoord), texture(tex2, TexCoord), 0.2) * vec4(vertexColor.r * sinTime, vertexColor.g * sin2Time, vertexColor.b * sin3Time, 1.);
 }
