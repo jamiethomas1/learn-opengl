@@ -1,25 +1,20 @@
-#include "renderer.h"
-#include "window.h"
-#include "shader.h"
-#include "vertexBuffer.h"
-#include "indexBuffer.h"
-#include "vertexArray.h"
-#include "vertexBufferLayout.h"
-#include "texture.h"
+#include "graphics/opengl/renderer.h"
+#include "graphics/opengl/window.h"
+#include "graphics/opengl/shader.h"
+#include "graphics/opengl/vertexBuffer.h"
+#include "graphics/opengl/indexBuffer.h"
+#include "graphics/opengl/vertexArray.h"
+#include "graphics/opengl/vertexBufferLayout.h"
+#include "graphics/opengl/texture.h"
 
 const int WIDTH = 800;
 const int HEIGHT = 600;
 
-// float vertices[] = {
-//     // positions
-//      0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,  // bottom right
-//     -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,  // bottom left
-//      0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f   // top
-// };
-
-// GLuint indices[] = {
-//     0, 1, 2
-// };
+/**
+ * DONE: Improve directory structure
+ * TODO: Add draw() overload to Renderer that takes an Entity instead of IndexBuffer
+ * TODO: Make everything that can be const, const
+*/
 
 float vertices[] = {
     // positions          // textures
