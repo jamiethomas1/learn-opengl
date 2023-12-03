@@ -13,13 +13,13 @@ public:
     Shader(const char* vertexPath, const char* fragmentPath);
     ~Shader();
 
-    void use();
+    const void use() const;
     
-    void setBool(const std::string &name, bool value);
-    void setInt(const std::string &name, int value);
-    void setFloat(const std::string &name, float value);
+    const void setBool(const std::string &name, const bool value) const;
+    const void setInt(const std::string &name, const int value) const;
+    const void setFloat(const std::string &name, const float value) const;
 
-    void setUniformMatrix4fv(const std::string &name, glm::mat4 value);
+    const void setUniformMatrix4fv(const std::string &name, const glm::mat4 value) const;
 
     const GLuint getID() const { return m_ID; }
 };

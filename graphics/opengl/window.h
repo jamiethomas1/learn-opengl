@@ -7,15 +7,15 @@
 class Window {
 private:
     GLFWwindow *m_Window;
-    unsigned int m_Width, m_Height;
+    const unsigned int m_Width, m_Height;
     const char* m_Title;
 
 public:
-    Window(unsigned int width, unsigned int height, std::string title);
+    Window(const unsigned int width, const unsigned int height, const std::string title);
     ~Window();
 
-    void processInput();
-    void update();
+    const void processInput() const;
+    const void update() const;
 
-    bool isOpen();
+    const bool isOpen() const;
 };

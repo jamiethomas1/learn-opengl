@@ -4,11 +4,11 @@
 #include <vector>
 
 struct VertexBufferElement {
-    GLuint type;
-    GLuint count;
-    GLuint normalized;
+    const GLuint type;
+    const GLuint count;
+    const GLuint normalized;
 
-    static GLuint getSizeOfType(GLuint type) {
+    static GLuint getSizeOfType(const GLuint type) {
         switch (type) {
             case GL_UNSIGNED_INT: return sizeof(unsigned int);
             case GL_FLOAT: return sizeof(float);
@@ -27,8 +27,8 @@ public:
     VertexBufferLayout();
     ~VertexBufferLayout();
 
-    void push(GLuint type, GLuint count);
+    void push(const GLuint type, const GLuint count);
 
     inline const std::vector<VertexBufferElement> getElements() const { return m_Elements; }
-    inline GLuint getStride() const { return m_Stride; }
+    inline const GLuint getStride() const { return m_Stride; }
 };

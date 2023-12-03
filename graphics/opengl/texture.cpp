@@ -2,14 +2,14 @@
 #include "stb_image.h"
 #include <iostream>
 
-Image* Texture::loadImage()
+const Image* Texture::loadImage() const
 {
     Image *image = new Image({0, 0, 0, m_Path, nullptr});
     image->data = stbi_load(image->path, &image->width, &image->height, &image->nrChannels, 0);
     return image;
 }
 
-Texture::Texture(const char *path, GLuint textureUnit, GLenum format)
+Texture::Texture(const char *path, const GLuint textureUnit, const GLenum format)
     : m_Path(path), m_TextureUnit(textureUnit)
 {
     stbi_set_flip_vertically_on_load(true);
@@ -37,13 +37,13 @@ Texture::~Texture()
     glDeleteTextures(1, &m_ID);
 }
 
-void Texture::bind() // could call bind(texUnit) with say GL_TEXTURE0 so it's more flexible
+const void Texture::bind() const // ? could call bind(texUnit) with say GL_TEXTURE0 so it's more flexible
 {
     glActiveTexture(m_TextureUnit);
     glBindTexture(GL_TEXTURE_2D, m_ID);
 }
 
-void Texture::unbind()
+const void Texture::unbind() const
 {
     glActiveTexture(m_TextureUnit);
     glBindTexture(GL_TEXTURE_2D, 0);

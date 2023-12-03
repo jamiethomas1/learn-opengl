@@ -7,13 +7,23 @@
 #include "graphics/opengl/vertexBufferLayout.h"
 #include "graphics/opengl/texture.h"
 
+#include "sandbox/cube.h"
+
 const int WIDTH = 800;
 const int HEIGHT = 600;
 
 /**
  * DONE: Improve directory structure
- * TODO: Add draw() overload to Renderer that takes an Entity instead of IndexBuffer
- * TODO: Make everything that can be const, const
+ * DONE: Make everthing that can be const, const
+ * DONE: Rename Entity class to Model
+ * DONE: Create parent class of Entity called Renderable, contains render() method
+ * DONE: Add std::vector<Renderable> to Renderer called m_RenderQueue
+ * DONE: Add overload of Renderer::draw() which loops through m_RenderQueue
+ * DONE: Decide whether to put glDrawElements call in draw() function or Renderable::render()
+ * DONE: I need to get the data to the Model class somehow before its constructor ends
+ * DONE: Finish building Cube/Model/Renderable classes to be able to provide relevant info to Renderer
+ * TODO: Create default shaders, and add a Shader as a field of Model class
+ * DONE: Consider moving the VAO to the Renderer class
 */
 
 float vertices[] = {
@@ -75,16 +85,19 @@ int main()
      * Initialise objects
      */
 
-    Window *window = new Window(WIDTH, HEIGHT, "LearnOpenGL");
+    const Window *window = new Window(WIDTH, HEIGHT, "LearnOpenGL");
     Renderer *renderer = new Renderer();
-    Shader *shader = new Shader("shaders/vertex.glsl", "shaders/fragment.glsl");
-    VertexArray *vao = new VertexArray();
-    VertexBuffer *vbo = new VertexBuffer(vertices, sizeof(vertices));
-    IndexBuffer *ibo = new IndexBuffer(indices, 36);
-    VertexBufferLayout *vbl = new VertexBufferLayout();
+    const Shader *shader = new Shader("shaders/vertex.glsl", "shaders/fragment.glsl");
+    // const VertexArray *vao = new VertexArray();
+    // const VertexBuffer *vbo = new VertexBuffer(vertices, sizeof(vertices));
+    // const IndexBuffer *ibo = new IndexBuffer(indices, 36);
+    // VertexBufferLayout *vbl = new VertexBufferLayout();
 
-    Texture *crateTexture = new Texture("res/container.jpg", GL_TEXTURE0, GL_RGB); // Perhaps a separate image class so the RGBA format is stored with the image
-    Texture *awesomeTexture = new Texture("res/awesomeface.png", GL_TEXTURE1, GL_RGBA);
+    Cube *cube = new Cube(glm::vec3(0.f, 0.f, 0.f));
+    renderer->push(cube);
+
+    const Texture *crateTexture = new Texture("res/container.jpg", GL_TEXTURE0, GL_RGB); // Perhaps a separate image class so the RGBA format is stored with the image
+    const Texture *awesomeTexture = new Texture("res/awesomeface.png", GL_TEXTURE1, GL_RGBA);
 
     shader->use();
     shader->setInt("tex", 0);
@@ -94,10 +107,10 @@ int main()
      * Push vertices & add buffer to vertex array
      */
 
-    vbl->push(GL_FLOAT, 3);
-    vbl->push(GL_FLOAT, 2);
+    // vbl->push(GL_FLOAT, 3);
+    // vbl->push(GL_FLOAT, 2);
 
-    vao->addBuffer(*vbo, *vbl);
+    // vao->addBuffer(*vbo, *vbl);
 
     /**
      * Dealing with matrices
@@ -133,29 +146,34 @@ int main()
         float time = glfwGetTime();
         shader->setFloat("time", time);
 
-        for (unsigned int i = 0; i < 10; i++)
-        {
-            model = glm::mat4(1.f);
-            model = glm::translate(model, cubePositions[i]);
-            float angle = 20.f * i;
-            model = glm::rotate(model, glm::radians(angle), glm::vec3(1.f, 0.3f, 0.5f));
+        // for (unsigned int i = 0; i < 10; i++)
+        // {
+        //     model = glm::mat4(1.f);
+        //     model = glm::translate(model, cubePositions[i]);
+        //     float angle = 20.f * i;
+        //     model = glm::rotate(model, glm::radians(angle), glm::vec3(1.f, 0.3f, 0.5f));
 
-            shader->setUniformMatrix4fv("model", model);
-            shader->setUniformMatrix4fv("view", view);
-            shader->setUniformMatrix4fv("projection", projection);
+        //     shader->setUniformMatrix4fv("model", model);
+        //     shader->setUniformMatrix4fv("view", view);
+        //     shader->setUniformMatrix4fv("projection", projection);
 
-            renderer->draw(vao, ibo, shader);
-        }
+        //     renderer->draw(vao, ibo, shader);
+        // }
+        shader->setUniformMatrix4fv("model", cube->getModelMatrix());
+        shader->setUniformMatrix4fv("view", view);
+        shader->setUniformMatrix4fv("projection", projection);
+        renderer->draw(shader);
 
         window->update();
     }
 
     delete (awesomeTexture);
     delete (crateTexture);
-    delete (vbl);
-    delete (ibo);
-    delete (vbo);
-    delete (vao);
+    //delete (cube);
+    // delete (vbl);
+    // delete (ibo);
+    // delete (vbo);
+    // delete (vao);
     delete (shader);
     delete (renderer);
     delete (window);

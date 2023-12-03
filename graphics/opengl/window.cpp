@@ -7,7 +7,7 @@ void framebuffer_size_callback(GLFWwindow *window, int width, int height)
     glViewport(0, 0, width, height);
 }
 
-Window::Window(unsigned int width, unsigned int height, std::string title)
+Window::Window(const unsigned int width, const unsigned int height, const std::string title)
     : m_Width(width), m_Height(height), m_Title(title.c_str())
 {
     glfwInit();
@@ -39,7 +39,7 @@ Window::~Window()
 }
 
 // Probably a temporary location for this function, can see this being expanded into its own file/class.
-void Window::processInput()
+const void Window::processInput() const
 {
     if (glfwGetKey(m_Window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
     {
@@ -47,11 +47,11 @@ void Window::processInput()
     }
 }
 
-void Window::update() {
+const void Window::update() const {
     glfwSwapBuffers(m_Window);
     glfwPollEvents();
 }
 
-bool Window::isOpen() {
+const bool Window::isOpen() const {
     return (!glfwWindowShouldClose(m_Window));
 }

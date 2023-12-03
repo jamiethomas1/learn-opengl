@@ -13,7 +13,7 @@
                 "${workspaceFolder}/src/*.c",
                 "${workspaceFolder}/graphics/*.cpp",
                 "${workspaceFolder}/graphics/opengl/*.cpp",
-                ////"${workspaceFolder}/sandbox/*.cpp",
+                "${workspaceFolder}/sandbox/*.cpp",
                 "${workspaceFolder}/*.cpp",
                 "-lglfw",
                 "-o",

@@ -13,7 +13,7 @@ public:
     VertexArray();
     ~VertexArray();
 
-    void addBuffer(const VertexBuffer &vb, const VertexBufferLayout &layout);
-    void bind();
-    void unbind();
+    const void addBuffer(const VertexBuffer &vb, const VertexBufferLayout &layout) const;
+    const void bind() const;
+    const void unbind() const;
 };

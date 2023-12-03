@@ -13,16 +13,16 @@ struct Image {
 class Texture {
 private:
     GLuint m_ID;
-    Image *m_Image;
-    GLuint m_TextureUnit;
+    const Image *m_Image;
+    const GLuint m_TextureUnit;
     const char *m_Path;
 
-    Image* loadImage();
+    const Image* loadImage() const;
 
 public:
-    Texture(const char *path, GLuint textureUnit, GLenum format);
+    Texture(const char *path, const GLuint textureUnit, const GLenum format);
     ~Texture();
 
-    void bind();
-    void unbind();
+    const void bind() const;
+    const void unbind() const;
 };
