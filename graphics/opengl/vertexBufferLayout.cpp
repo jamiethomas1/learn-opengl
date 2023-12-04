@@ -9,7 +9,7 @@ VertexBufferLayout::~VertexBufferLayout()
 {
 }
 
-void VertexBufferLayout::push(const GLuint type, const GLuint count)
+void VertexBufferLayout::push(const unsigned int type, const unsigned int count)
 {
     m_Elements.push_back({type, count, GL_FALSE});
     m_Stride += count * VertexBufferElement::getSizeOfType(type);

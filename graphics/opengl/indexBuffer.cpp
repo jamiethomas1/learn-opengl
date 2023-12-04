@@ -1,6 +1,7 @@
+#include "indexBuffer.h"
+
 #include <iostream>
 #include <glad/glad.h>
-#include "indexBuffer.h"
 
 
 /**

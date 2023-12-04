@@ -1,14 +1,14 @@
 #pragma once
 
-#include "renderer.h"
+#include <glad/glad.h>
 #include <vector>
 
 struct VertexBufferElement {
-    const GLuint type;
-    const GLuint count;
-    const GLuint normalized;
+    const unsigned int type;
+    const unsigned int count;
+    const unsigned int normalized;
 
-    static GLuint getSizeOfType(const GLuint type) {
+    static unsigned int getSizeOfType(const unsigned int type) {
         switch (type) {
             case GL_UNSIGNED_INT: return sizeof(unsigned int);
             case GL_FLOAT: return sizeof(float);
@@ -21,14 +21,14 @@ struct VertexBufferElement {
 class VertexBufferLayout {
 private:
     std::vector<VertexBufferElement> m_Elements;
-    GLuint m_Stride;
+    unsigned int m_Stride;
 
 public:
     VertexBufferLayout();
     ~VertexBufferLayout();
 
-    void push(const GLuint type, const GLuint count);
+    void push(const unsigned int type, const unsigned int count);
 
     inline const std::vector<VertexBufferElement> getElements() const { return m_Elements; }
-    inline const GLuint getStride() const { return m_Stride; }
+    inline const unsigned int getStride() const { return m_Stride; }
 };

@@ -1,18 +1,17 @@
 #pragma once
 
-#include "renderer.h"
 #include <vector>
 
 class VertexBuffer
 {
 private:
-    GLuint m_ID;
+    unsigned int m_ID;
     std::vector<float> m_Vertices;
 
 public:
     VertexBuffer();
-    VertexBuffer(const void *data, const GLuint size);
-    VertexBuffer(const std::vector<float> vertices, const GLuint size);
+    VertexBuffer(const void *data, const unsigned int size);
+    VertexBuffer(const std::vector<float> vertices, const unsigned int size);
     ~VertexBuffer();
 
     const void bind() const;
