@@ -10,8 +10,6 @@ private:
 
 public:
     VertexBuffer();
-    VertexBuffer(const void *data, const unsigned int size);
-    VertexBuffer(const std::vector<float> vertices, const unsigned int size);
     ~VertexBuffer();
 
     const void bind() const;
