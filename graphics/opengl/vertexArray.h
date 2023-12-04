@@ -6,7 +6,7 @@
 class VertexArray
 {
 private:
-    GLuint m_ID;
+    unsigned int m_ID;
 
 public:
     VertexArray();

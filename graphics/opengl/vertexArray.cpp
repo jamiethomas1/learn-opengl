@@ -2,17 +2,31 @@
 
 #include <glad/glad.h>
 
+
+/**
+ * @brief Generate & bind VertexArray object
+*/
 VertexArray::VertexArray()
 {
     glGenVertexArrays(1, &m_ID);
     glBindVertexArray(m_ID);
 }
 
+
+/**
+ * @brief Wrapper for glDeleteVertexArrays
+*/
 VertexArray::~VertexArray()
 {
     glDeleteVertexArrays(1, &m_ID);
 }
 
+
+/**
+ * @brief Add a new VertexBuffer to the VertexArray
+ * @param vb The VertexBuffer to be added
+ * @param layout Layout object containing info about that buffer's data structure
+*/
 const void VertexArray::addBuffer(const VertexBuffer &vb, const VertexBufferLayout &layout) const
 {
     bind();
@@ -28,11 +42,19 @@ const void VertexArray::addBuffer(const VertexBuffer &vb, const VertexBufferLayo
     }
 }
 
+
+/**
+ * @brief Wrapper for glBindVertexArray
+*/
 const void VertexArray::bind() const
 {
     glBindVertexArray(m_ID);
 }
 
+
+/**
+ * @brief Wrapper for glBindVertexArray
+*/
 const void VertexArray::unbind() const
 {
     glBindVertexArray(0);
