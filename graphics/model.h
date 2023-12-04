@@ -1,5 +1,7 @@
 #pragma once
 
+#include <glm/glm.hpp>
+
 #include "opengl/vertexBuffer.h"
 #include "opengl/indexBuffer.h"
 #include "opengl/vertexBufferLayout.h"
@@ -25,8 +27,8 @@ public:
     inline void setVertices(std::vector<float> vertices) { m_VB.setData(vertices); }
     inline void setIndices(std::vector<unsigned int> indices) { m_IB.setData(indices); }
 
-    inline VertexBuffer& getVertexBuffer() { return m_VB; }
-    inline VertexBufferLayout& getBufferLayout() { return m_Layout; }
+    inline VertexBuffer& getVertexBuffer() override { return m_VB; }
+    inline VertexBufferLayout& getBufferLayout() override { return m_Layout; }
 
     virtual inline const glm::vec3 getPosition() const { return m_Position; }
     virtual inline void setPosition(const glm::vec3 position) { m_Position = position; }

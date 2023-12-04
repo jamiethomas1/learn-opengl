@@ -1,6 +1,6 @@
 #pragma once
 
-#include "renderer.h"
+#include "renderer.h" // includes Renderer to allow it access to render()
 #include "vertexBuffer.h"
 #include "vertexBufferLayout.h"
 

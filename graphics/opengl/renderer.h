@@ -1,20 +1,15 @@
 #pragma once
 
-#include <glad/glad.h>
-#include <assert.h>
 #include <vector>
-
-#include "glm/glm.hpp"
-#include "glm/gtc/matrix_transform.hpp"
-#include "glm/gtc/type_ptr.hpp"
-#include "glm/gtx/string_cast.hpp"
 
 #include "renderable.h"
 #include "vertexArray.h"
+#include "shader.h"
 
-class VertexArray;
-class IndexBuffer;
-class Shader;
+/**
+ * * Forward declaration of Renderable as Renderer needs to be included 
+ * * in Renderable to be safely declared as a friend
+*/
 class Renderable;
 
 class Renderer {
@@ -30,6 +25,4 @@ public:
 
     const void clear() const;
     const void draw(const Shader *sh) const;
-    const void draw(const VertexArray *va, const Shader *sh) const;
-    const void draw(const VertexArray *va, const IndexBuffer *ib, const Shader *sh) const;
 };

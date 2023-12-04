@@ -1,10 +1,10 @@
+#include <glm/glm.hpp>
+#include <glm/ext/matrix_transform.hpp> // for glm::translate()
+#include <glm/ext/matrix_clip_space.hpp> // for glm::perspective()
+
 #include "graphics/opengl/renderer.h"
 #include "graphics/opengl/window.h"
 #include "graphics/opengl/shader.h"
-#include "graphics/opengl/vertexBuffer.h"
-#include "graphics/opengl/indexBuffer.h"
-#include "graphics/opengl/vertexArray.h"
-#include "graphics/opengl/vertexBufferLayout.h"
 #include "graphics/opengl/texture.h"
 
 #include "sandbox/cube.h"
@@ -99,6 +99,10 @@ int main()
         }
 
         window->update();
+    }
+
+    for (auto& i : cubePositions) {
+        delete i;
     }
 
     delete awesomeTexture;

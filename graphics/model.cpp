@@ -1,6 +1,7 @@
 #include "model.h"
 
 #include <iostream>
+#include <glm/ext/matrix_transform.hpp> // for glm::translate()
 
 // ? If possible to do without messing up inheritance, this could be simplified by making the position parameter in the next overload optional
 Model::Model()
