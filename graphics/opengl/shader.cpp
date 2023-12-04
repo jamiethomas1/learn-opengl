@@ -1,4 +1,6 @@
 #include "shader.h"
+#include <glad/glad.h>
+#include <glm/gtc/type_ptr.hpp>
 
 /**
  * @brief Read shader files into program

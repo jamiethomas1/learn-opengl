@@ -1,11 +1,11 @@
 #pragma once
 
-#include "renderer.h"
 #include <iostream>
+#include <glm/glm.hpp>
 
 class Shader {
 private:
-    GLuint m_ID;
+    unsigned int m_ID;
 
     const char* parseShader(const char *path) const;
 
