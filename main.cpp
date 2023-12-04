@@ -26,7 +26,7 @@ const int HEIGHT = 600;
  * DONE: Consider moving the VAO to the Renderer class
  * TODO: Abstract matrices (may want to wait until Camera implemented)
  * TODO: Implement a way to get and set rotation of Model matrix
- * TODO: Add extensive comments and make code look clear and easy to read
+ * DONE: Add extensive comments and make code look clear and easy to read
 */
 
 int main()
@@ -81,13 +81,10 @@ int main()
         crateTexture->bind();
         awesomeTexture->bind();
 
-        float time = glfwGetTime();
-        shader->setFloat("time", time);
-
         for (unsigned int i = 0; i < 10; i++)
         {
             model = glm::mat4(1.f);
-            model = glm::translate(model, cubePositions[i]->getPosition());
+            model = cubePositions[i]->getModelMatrix();
             float angle = 20.f * i;
             model = glm::rotate(model, glm::radians(angle), glm::vec3(1.f, 0.3f, 0.5f));
 
