@@ -1,41 +1,49 @@
-#include "indexBuffer.h"
 #include <iostream>
+#include <glad/glad.h>
+#include "indexBuffer.h"
 
+
+/**
+ * @brief Generates and binds an element array buffer
+*/
 IndexBuffer::IndexBuffer()
 {
     glGenBuffers(1, &m_ID);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ID);
 }
 
-IndexBuffer::IndexBuffer(const GLuint *data, const GLuint count)
-    : m_Count(count)
-{
-    glGenBuffers(1, &m_ID);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ID);
-}
 
-IndexBuffer::IndexBuffer(const std::vector<unsigned int> indices, const GLuint count)
-    : m_Count(count)
-{
-    glGenBuffers(1, &m_ID);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ID);
-}
-
+/**
+ * @brief Wrapper for glDeleteBuffers
+*/
 IndexBuffer::~IndexBuffer()
 {
     glDeleteBuffers(1, &m_ID);
 }
 
+
+/**
+ * @brief Wrapper for glBindBuffers
+*/
 const void IndexBuffer::bind() const
 {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ID);
 }
 
+
+/**
+ * @brief Wrapper for glBindBuffers
+*/
 const void IndexBuffer::unbind() const
 {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
+
+/**
+ * @brief Add vector of indices to the index buffer. Calls glBufferData
+ * @param indices The vector of indices
+*/
 void IndexBuffer::setData(const std::vector<unsigned int> indices)
 {
     m_Indices = indices;

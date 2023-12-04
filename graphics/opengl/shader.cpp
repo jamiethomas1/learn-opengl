@@ -2,6 +2,7 @@
 #include <glad/glad.h>
 #include <glm/gtc/type_ptr.hpp>
 
+
 /**
  * @brief Read shader files into program
  * @param path Path of shader file
@@ -27,6 +28,7 @@ const char* Shader::parseShader(const char *path) const {
 
     return shaderSource;
 }
+
 
 /**
  * @brief Generates shader program from vertex & fragment shader files. 
@@ -83,6 +85,7 @@ Shader::Shader(const char *vertexPath, const char *fragmentPath)
     glDeleteShader(fragment);
 }
 
+
 /**
  * @brief Wrapper for glDeleteProgram
 */
@@ -91,6 +94,7 @@ Shader::~Shader()
     glDeleteProgram(m_ID);
 }
 
+
 /**
  * @brief Wrapper for glUseProgram
 */
@@ -98,6 +102,7 @@ const void Shader::use() const
 {
     glUseProgram(m_ID);
 }
+
 
 /**
  * @brief Set a boolean uniform on the shader program
@@ -109,6 +114,7 @@ const void Shader::setBool(const std::string &name, const bool value) const
     glUniform1i(glGetUniformLocation(m_ID, name.c_str()), (int) value);
 }
 
+
 /**
  * @brief Set an integer uniform on the shader program
  * @param name The name of the uniform
@@ -118,6 +124,7 @@ const void Shader::setInt(const std::string &name, const int value) const
 {
     glUniform1i(glGetUniformLocation(m_ID, name.c_str()), value);
 }
+
 
 /**
  * @brief Set a float uniform on the shader program
@@ -129,6 +136,7 @@ const void Shader::setFloat(const std::string &name, const float value) const
     glUniform1f(glGetUniformLocation(m_ID, name.c_str()), value);
 }
 
+
 /**
  * @brief Set a vec3 uniform on the shader program
  * @param name The name of the uniform
@@ -138,6 +146,7 @@ const void Shader::setVec3f(const std::string &name, const glm::vec3 value) cons
 {
     glUniform3fv(glGetUniformLocation(m_ID, name.c_str()), 1, glm::value_ptr(value));
 }
+
 
 /**
  * @brief Set a mat4 uniform on the shader program
