@@ -1,7 +1,14 @@
 #include "texture.h"
 #include "stb_image.h"
-#include <iostream>
 
+#include <iostream>
+#include <glad/glad.h>
+
+
+/**
+ * @brief Read image file as raw data into Image object
+ * @return Pointer to Image object
+*/
 const Image* Texture::loadImage() const
 {
     Image *image = new Image({0, 0, 0, m_Path, nullptr});
@@ -9,7 +16,14 @@ const Image* Texture::loadImage() const
     return image;
 }
 
-Texture::Texture(const char *path, const GLuint textureUnit, const GLenum format)
+
+/**
+ * @brief Generate, bind, and prepare a Texture object
+ * @param path Path to image file
+ * @param textureUnit (GLenum) OpenGL texture unit e.g. GL_TEXTURE0
+ * @param format (GLenum) Colour format e.g. GL_RGBA
+*/
+Texture::Texture(const char *path, const unsigned int textureUnit, const unsigned int format)
     : m_Path(path), m_TextureUnit(textureUnit)
 {
     stbi_set_flip_vertically_on_load(true);
@@ -32,17 +46,29 @@ Texture::Texture(const char *path, const GLuint textureUnit, const GLenum format
     }
 }
 
+
+/**
+ * @brief Wrapper for glDeleteTextures
+*/
 Texture::~Texture()
 {
     glDeleteTextures(1, &m_ID);
 }
 
+
+/**
+ * @brief Wrapper for glBindTexture
+*/
 const void Texture::bind() const // ? could call bind(texUnit) with say GL_TEXTURE0 so it's more flexible
 {
     glActiveTexture(m_TextureUnit);
     glBindTexture(GL_TEXTURE_2D, m_ID);
 }
 
+
+/**
+ * @brief Wrapper for glBindTexture
+*/
 const void Texture::unbind() const
 {
     glActiveTexture(m_TextureUnit);

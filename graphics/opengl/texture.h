@@ -1,6 +1,5 @@
 #pragma once
 
-#include "renderer.h"
 
 struct Image {
     int width;
@@ -10,17 +9,18 @@ struct Image {
     unsigned char *data;
 };
 
+
 class Texture {
 private:
-    GLuint m_ID;
+    unsigned int m_ID;
     const Image *m_Image;
-    const GLuint m_TextureUnit;
+    const unsigned int m_TextureUnit;
     const char *m_Path;
 
     const Image* loadImage() const;
 
 public:
-    Texture(const char *path, const GLuint textureUnit, const GLenum format);
+    Texture(const char *path, const unsigned int textureUnit, const unsigned int format);
     ~Texture();
 
     const void bind() const;
