@@ -2,6 +2,7 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+
 #include <iostream>
 
 class Window {
@@ -12,7 +13,7 @@ private:
 
 public:
     Window(const unsigned int width, const unsigned int height, const std::string title);
-    ~Window();
+    ~Window() {}
 
     const void processInput() const;
     const void update() const;
