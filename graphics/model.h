@@ -20,7 +20,7 @@ protected:
     glm::mat4 m_ModelMatrix;
 
 public:
-    Model();
+    inline Model() : Model(glm::vec3(0.f, 0.f, 0.f)) {}
     Model(const glm::vec3 position);
     virtual inline ~Model() {}
 
