@@ -24,59 +24,10 @@ const int HEIGHT = 600;
  * DONE: Finish building Cube/Model/Renderable classes to be able to provide relevant info to Renderer
  * TODO: Create default shaders, and add a Shader as a field of Model class
  * DONE: Consider moving the VAO to the Renderer class
+ * TODO: Abstract matrices (may want to wait until Camera implemented)
+ * TODO: Implement a way to get and set rotation of Model matrix
+ * TODO: Add extensive comments and make code look clear and easy to read
 */
-
-float vertices[] = {
-    // positions          // textures
-    -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-     0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-
-    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-     0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-    -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-
-    -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-    -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-
-     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-     0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-     0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-
-    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-     0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-
-    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-    -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-};
-
-GLuint indices[] = {
-    0, 1, 3,
-    1, 2, 3,
-
-    4, 5, 7,
-    5, 6, 7,
-
-    8, 9, 11,
-    9, 10, 11,
-
-    12, 13, 15,
-    13, 14, 15,
-
-    16, 17, 19,
-    17, 18, 19,
-
-    20, 21, 23,
-    21, 22, 23};
 
 int main()
 {
@@ -88,10 +39,6 @@ int main()
     const Window *window = new Window(WIDTH, HEIGHT, "LearnOpenGL");
     Renderer *renderer = new Renderer();
     const Shader *shader = new Shader("shaders/vertex.glsl", "shaders/fragment.glsl");
-    // const VertexArray *vao = new VertexArray();
-    // const VertexBuffer *vbo = new VertexBuffer(vertices, sizeof(vertices));
-    // const IndexBuffer *ibo = new IndexBuffer(indices, 36);
-    // VertexBufferLayout *vbl = new VertexBufferLayout();
 
     Cube *cube = new Cube(glm::vec3(0.f, 0.f, 0.f));
     renderer->push(cube);
@@ -104,15 +51,6 @@ int main()
     shader->setInt("tex2", 1);
 
     /**
-     * Push vertices & add buffer to vertex array
-     */
-
-    // vbl->push(GL_FLOAT, 3);
-    // vbl->push(GL_FLOAT, 2);
-
-    // vao->addBuffer(*vbo, *vbl);
-
-    /**
      * Dealing with matrices
      */
 
@@ -123,17 +61,17 @@ int main()
 
     glm::mat4 projection = glm::perspective(glm::radians(45.f), (float)WIDTH / (float)HEIGHT, 0.1f, 100.f);
 
-    glm::vec3 cubePositions[] = {
-        glm::vec3(0.0f, 0.0f, 0.0f),
-        glm::vec3(2.0f, 5.0f, -15.0f),
-        glm::vec3(-1.5f, -2.2f, -2.5f),
-        glm::vec3(-3.8f, -2.0f, -12.3f),
-        glm::vec3(2.4f, -0.4f, -3.5f),
-        glm::vec3(-1.7f, 3.0f, -7.5f),
-        glm::vec3(1.3f, -2.0f, -2.5f),
-        glm::vec3(1.5f, 2.0f, -2.5f),
-        glm::vec3(1.5f, 0.2f, -1.5f),
-        glm::vec3(-1.3f, 1.0f, -1.5f)};
+    Cube* cubePositions[] = {
+        new Cube(0.0f, 0.0f, 0.0f),
+        new Cube(2.0f, 5.0f, -15.0f),
+        new Cube(-1.5f, -2.2f, -2.5f),
+        new Cube(-3.8f, -2.0f, -12.3f),
+        new Cube(2.4f, -0.4f, -3.5f),
+        new Cube(-1.7f, 3.0f, -7.5f),
+        new Cube(1.3f, -2.0f, -2.5f),
+        new Cube(1.5f, 2.0f, -2.5f),
+        new Cube(1.5f, 0.2f, -1.5f),
+        new Cube(-1.3f, 1.0f, -1.5f)};
 
     while (window->isOpen())
     {
@@ -146,37 +84,28 @@ int main()
         float time = glfwGetTime();
         shader->setFloat("time", time);
 
-        // for (unsigned int i = 0; i < 10; i++)
-        // {
-        //     model = glm::mat4(1.f);
-        //     model = glm::translate(model, cubePositions[i]);
-        //     float angle = 20.f * i;
-        //     model = glm::rotate(model, glm::radians(angle), glm::vec3(1.f, 0.3f, 0.5f));
+        for (unsigned int i = 0; i < 10; i++)
+        {
+            model = glm::mat4(1.f);
+            model = glm::translate(model, cubePositions[i]->getPosition());
+            float angle = 20.f * i;
+            model = glm::rotate(model, glm::radians(angle), glm::vec3(1.f, 0.3f, 0.5f));
 
-        //     shader->setUniformMatrix4fv("model", model);
-        //     shader->setUniformMatrix4fv("view", view);
-        //     shader->setUniformMatrix4fv("projection", projection);
+            shader->setMatrix4x4f("model", model);
+            shader->setMatrix4x4f("view", view);
+            shader->setMatrix4x4f("projection", projection);
 
-        //     renderer->draw(vao, ibo, shader);
-        // }
-        shader->setUniformMatrix4fv("model", cube->getModelMatrix());
-        shader->setUniformMatrix4fv("view", view);
-        shader->setUniformMatrix4fv("projection", projection);
-        renderer->draw(shader);
+            renderer->draw(shader);
+        }
 
         window->update();
     }
 
-    delete (awesomeTexture);
-    delete (crateTexture);
-    //delete (cube);
-    // delete (vbl);
-    // delete (ibo);
-    // delete (vbo);
-    // delete (vao);
-    delete (shader);
-    delete (renderer);
-    delete (window);
+    delete awesomeTexture;
+    delete crateTexture;
+    delete shader;
+    delete renderer;
+    delete window;
 
     glfwTerminate();
     return 0;

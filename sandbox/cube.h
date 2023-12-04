@@ -58,7 +58,8 @@ private:
     };
 
 public:
-    Cube();
+    inline Cube() : Cube(glm::vec3(0.f, 0.f, 0.f)) {}
     Cube(glm::vec3 position);
+    inline Cube(float xPos, float yPos, float zPos) : Cube(glm::vec3(xPos, yPos, zPos)) {}
     inline ~Cube() override {}
 };

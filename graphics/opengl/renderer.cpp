@@ -16,6 +16,7 @@ Renderer::~Renderer()
     for (auto* r : m_RenderQueue) {
         delete r;
     }
+    delete m_VA;
 }
 
 void Renderer::push(Renderable *r)

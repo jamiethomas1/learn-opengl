@@ -19,7 +19,7 @@ public:
     const void setInt(const std::string &name, const int value) const;
     const void setFloat(const std::string &name, const float value) const;
 
-    const void setUniformMatrix4fv(const std::string &name, const glm::mat4 value) const;
+    const void setVec3f(const std::string &name, const glm::vec3 value) const;
 
-    const GLuint getID() const { return m_ID; }
+    const void setMatrix4x4f(const std::string &name, const glm::mat4 value) const;
 };
