@@ -1,14 +1,17 @@
 #pragma once
 
+#include <glm/glm.hpp>
+
 #include "renderer.h" // includes Renderer to allow it access to render()
 #include "vertexBuffer.h"
 #include "vertexBufferLayout.h"
+#include "shader.h"
 
 
 class Renderable {
 protected:
-    virtual inline const void render() const = 0;
-    const void render(const unsigned int indicesCount) const;
+    virtual inline void render() = 0;
+    void render(const unsigned int indicesCount);
 
 public:
     inline Renderable() {};
@@ -16,6 +19,8 @@ public:
 
     virtual inline VertexBuffer& getVertexBuffer() = 0;
     virtual inline VertexBufferLayout& getBufferLayout() = 0;
+    virtual inline Shader& getShader() = 0;
+    virtual inline const glm::mat4 getModelMatrix() const = 0;
 
     friend class Renderer;
 };

@@ -14,7 +14,7 @@ class Renderable;
 
 class Renderer {
 private:
-    std::vector<const Renderable*> m_RenderQueue;
+    std::vector<Renderable*> m_RenderQueue;
     VertexArray *m_VA;
 
 public:
@@ -24,5 +24,5 @@ public:
     void push(Renderable* r);
 
     const void clear() const;
-    const void draw(const Shader *sh) const;
+    const void draw();
 };
