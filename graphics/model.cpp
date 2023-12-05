@@ -50,6 +50,11 @@ void Model::setRotation(const float angle, const glm::vec3 axis)
     setPosition(m_Position); // Have to reset position after rotating
 }
 
+
+/**
+ * @brief Set rotation of Model
+ * @param rotationMatrix Matrix to rotate model with
+ */
 void Model::setRotation(glm::mat4& rotationMatrix)
 {
     m_RotationMatrix = rotationMatrix;
@@ -57,12 +62,22 @@ void Model::setRotation(glm::mat4& rotationMatrix)
     setPosition(m_Position); // Have to reset position after rotating
 }
 
+
+/**
+ * @brief Move model with given translation vector
+ * @param movement Translation vector
+ */
 void Model::move(glm::vec3 &movement)
 {
     glm::mat4 translationMatrix = glm::translate(glm::mat4(1.f), glm::vec3(movement));
     move(translationMatrix);
 }
 
+
+/**
+ * @brief Move model with given translation matrix
+ * @param translationMatrix Matrix to translate model with
+ */
 void Model::move(glm::mat4 &translationMatrix)
 {
     m_ModelMatrix = translationMatrix * m_ModelMatrix;
