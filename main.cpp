@@ -28,9 +28,10 @@ const int HEIGHT = 600;
  * DONE: Create default textures, and add a Texture as a field of Model class - Should be an array of textures
  * DONE: Work out why only one cube is showing. Are they all inside each other? If so, why are the matrices not correct?
  * DONE: Implement a way to get and set rotation of Model matrix. First attempt hasn't worked, need to try again
- * TODO: Abstract matrices (may want to wait until Camera implemented)
+ * TODO: Abstract matrices (may want to wait until Camera implemented) - Not going to do this until I can see a clear benefit of it
  * TODO: Make Window static so WIDTH and HEIGHT are accessible throughout program
- * TODO: Implement an OpenGL error wrapper for all GL calls
+ * TODO: Make Renderer static so I can push Renderables to the renderer in their constructors
+ * DONE: Implement an OpenGL error wrapper for all GL calls
  * DONE: Add extensive comments and make code look clear and easy to read
 */
 

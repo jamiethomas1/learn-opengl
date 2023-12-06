@@ -1,6 +1,7 @@
 #include "window.h"
 
 #include <assert.h>
+#include "checkGLErrors.h"
 
 
 /**
@@ -11,7 +12,12 @@
 */
 void framebuffer_size_callback(GLFWwindow *window, int width, int height)
 {
-    glViewport(0, 0, width, height);
+    GL_CALL(glViewport(0, 0, width, height));
+}
+
+
+void glfwErrorCallback(int error, const char* description) {
+    std::cerr << "GLFW Error " << error << ": " << description << std::endl;
 }
 
 
@@ -24,10 +30,15 @@ void framebuffer_size_callback(GLFWwindow *window, int width, int height)
 Window::Window(const unsigned int width, const unsigned int height, const std::string title)
     : m_Width(width), m_Height(height), m_Title(title.c_str())
 {
-    glfwInit();
+    if (!glfwInit()) {
+        std::cerr << "Failed to initialise GLFW" << std::endl;
+        throw std::runtime_error("Failed to initialise GLFW");
+    }
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+    glfwSetErrorCallback(glfwErrorCallback);
 
     m_Window = glfwCreateWindow(m_Width, m_Height, m_Title, NULL, NULL);
     if (m_Window == NULL)
@@ -44,7 +55,7 @@ Window::Window(const unsigned int width, const unsigned int height, const std::s
         assert(false);
     }
 
-    glViewport(0, 0, m_Width, m_Height);
+    GL_CALL(glViewport(0, 0, m_Width, m_Height));
     glfwSetFramebufferSizeCallback(m_Window, framebuffer_size_callback);
 }
 

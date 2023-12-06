@@ -1,6 +1,7 @@
 #include "renderer.h"
 
 #include <glad/glad.h>
+#include "checkGLErrors.h"
 #include <glm/ext/matrix_transform.hpp> // for glm::translate()
 #include <glm/ext/matrix_clip_space.hpp>
 
@@ -14,7 +15,7 @@ const int WIDTH = 800, HEIGHT = 600; // ! This is a very temporary solution, the
 Renderer::Renderer()
     : m_VA(new VertexArray())
 {
-    glEnable(GL_DEPTH_TEST);
+    GL_CALL(glEnable(GL_DEPTH_TEST));
 }
 
 
@@ -48,8 +49,8 @@ void Renderer::push(Renderable *r)
 */
 const void Renderer::clear() const
 {
-    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    GL_CALL(glClearColor(0.2f, 0.3f, 0.3f, 1.0f));
+    GL_CALL(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 }
 
 

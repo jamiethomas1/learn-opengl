@@ -1,6 +1,7 @@
 #include "renderable.h"
 
 #include <glad/glad.h>
+#include "checkGLErrors.h"
 
 
 /**
@@ -8,5 +9,5 @@
  * @param indicesCount Number of indices in the Renderable's IndexBuffer
 */
 void Renderable::render(const unsigned int indicesCount) {
-    glDrawElements(GL_TRIANGLES, indicesCount, GL_UNSIGNED_INT, 0);
+    GL_CALL(glDrawElements(GL_TRIANGLES, indicesCount, GL_UNSIGNED_INT, 0));
 }
