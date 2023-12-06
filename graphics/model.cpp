@@ -1,6 +1,7 @@
 #include "model.h"
 
 #include <iostream>
+#include <assert.h>
 #include <glm/ext/matrix_transform.hpp> // for glm::translate()
 #include <glm/gtx/string_cast.hpp>
 
@@ -15,7 +16,6 @@ Model::Model(const glm::vec3 position)
     : m_Position(position)
     , m_RotationMatrix(glm::mat4(1.f))
     , m_Shader("shaders/vertex.glsl", "shaders/fragment.glsl")
-    , m_Texture("res/container.jpg", GL_TEXTURE0, GL_RGB)
 {
     setPosition(m_Position);
     
@@ -24,6 +24,32 @@ Model::Model(const glm::vec3 position)
 
     m_Shader.use();
     m_Shader.setInt("tex", 0);
+}
+
+
+/**
+ * @brief Push a Texture to the Model's vector of Textures
+ * @param texturePath Path to the image file
+ * @note Passing a default constructor Texture() will result in the default texture
+ */
+void Model::addTexture(const char* texturePath)
+{
+    assert(m_TextureVector.size() < 16);
+    
+    m_TextureVector.push_back(new Texture(texturePath, GL_TEXTURE0 + m_TextureVector.size()));
+}
+
+
+/**
+ * @brief Loop through texture vector and call bind() on each. Also sends texture to shader.
+ */
+const void Model::bindTextures() const
+{
+    for (unsigned int i = 0; i < m_TextureVector.size(); i++) {
+        m_TextureVector[i]->bind();
+        m_Shader.use();
+        m_Shader.setInt("textures[" + std::to_string(i) + "]", i);
+    }
 }
 
 
@@ -111,5 +137,7 @@ void Model::rotate(glm::mat4& rotationMatrix)
  * @brief Renders model on screen. Calls Renderable::render()
  */
 void Model::render() {
+    if (m_TextureVector.empty()) addTexture("res/default.jpg"); // If no texture specified, use default texture
+    bindTextures();
     Renderable::render(m_IB.getCount());
 }

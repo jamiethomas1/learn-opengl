@@ -1,5 +1,7 @@
 #pragma once
 
+#include <glad/glad.h>
+
 
 struct Image {
     int width;
@@ -20,7 +22,8 @@ private:
     const Image* loadImage() const;
 
 public:
-    Texture(const char *path, const unsigned int textureUnit, const unsigned int format);
+    Texture() : Texture("res/default.jpg", GL_TEXTURE0) {}
+    Texture(const char *path, const unsigned int textureUnit);
     ~Texture();
 
     const void bind() const;

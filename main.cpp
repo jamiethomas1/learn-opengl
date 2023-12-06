@@ -25,7 +25,7 @@ const int HEIGHT = 600;
  * DONE: Finish building Cube/Model/Renderable classes to be able to provide relevant info to Renderer
  * DONE: Consider moving the VAO to the Renderer class
  * DONE: Create default shaders, and add a Shader as a field of Model class
- * TODO: Create default textures, and add a Texture as a field of Model class - Should be an array of textures
+ * DONE: Create default textures, and add a Texture as a field of Model class - Should be an array of textures
  * DONE: Work out why only one cube is showing. Are they all inside each other? If so, why are the matrices not correct?
  * DONE: Implement a way to get and set rotation of Model matrix. First attempt hasn't worked, need to try again
  * TODO: Abstract matrices (may want to wait until Camera implemented)
@@ -46,13 +46,6 @@ int main()
 
     // Cube *cube = new Cube(glm::vec3(0.f, 0.f, 0.f));
     // renderer->push(cube);
-
-    // const Texture *crateTexture = new Texture("res/container.jpg", GL_TEXTURE0, GL_RGB); // Perhaps a separate image class so the RGBA format is stored with the image
-    // const Texture *awesomeTexture = new Texture("res/awesomeface.png", GL_TEXTURE1, GL_RGBA);
-
-    // shader->use();
-    // shader->setInt("tex", 0);
-    // shader->setInt("tex2", 1);
 
     Cube* cubePositions[] = {
         new Cube(0.0f, 0.0f, 0.0f),
@@ -79,18 +72,13 @@ int main()
     while (window->isOpen())
     {
         window->processInput();
+        
         renderer->clear();
-
-        // crateTexture->bind();
-        // awesomeTexture->bind();
-
         renderer->draw();
 
         window->update();
     }
 
-    // delete awesomeTexture;
-    // delete crateTexture;
     delete renderer;
     delete window;
 

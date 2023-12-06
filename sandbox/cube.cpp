@@ -10,4 +10,6 @@ Cube::Cube(glm::vec3 position) : Model(position)
 {
     setVertices(m_Vertices);
     setIndices(m_Indices);
+    addTexture("res/container.jpg");
+    addTexture("res/awesomeface.png");
 }

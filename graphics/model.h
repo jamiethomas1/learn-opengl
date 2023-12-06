@@ -22,13 +22,16 @@ protected:
     IndexBuffer m_IB;
     VertexBufferLayout m_Layout;
     Shader m_Shader;
-    Texture m_Texture;
+    std::vector<Texture*> m_TextureVector;
     glm::mat4 m_ModelMatrix;
 
 public:
     inline Model() : Model(glm::vec3(0.f, 0.f, 0.f)) {}
     Model(const glm::vec3 position);
     virtual inline ~Model() {}
+
+    void addTexture(const char* texturePath);
+    const void bindTextures() const;
 
     inline void setVertices(std::vector<float> vertices) { m_VB.setData(vertices); }
     inline void setIndices(std::vector<unsigned int> indices) { m_IB.setData(indices); }

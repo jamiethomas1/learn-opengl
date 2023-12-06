@@ -2,7 +2,6 @@
 #include "stb_image.h"
 
 #include <iostream>
-#include <glad/glad.h>
 
 
 /**
@@ -23,7 +22,7 @@ const Image* Texture::loadImage() const
  * @param textureUnit (GLenum) OpenGL texture unit e.g. GL_TEXTURE0
  * @param format (GLenum) Colour format e.g. GL_RGBA
 */
-Texture::Texture(const char *path, const unsigned int textureUnit, const unsigned int format)
+Texture::Texture(const char *path, const unsigned int textureUnit)
     : m_Path(path), m_TextureUnit(textureUnit)
 {
     stbi_set_flip_vertically_on_load(true);
@@ -37,6 +36,9 @@ Texture::Texture(const char *path, const unsigned int textureUnit, const unsigne
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    unsigned int format = GL_RGB;
+    if (m_Image->nrChannels == 4) format = GL_RGBA;
 
     if (m_Image->data) {
         glTexImage2D(GL_TEXTURE_2D, 0, format, m_Image->width, m_Image->height, 0, format, GL_UNSIGNED_BYTE, m_Image->data);
