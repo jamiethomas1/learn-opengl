@@ -7,17 +7,17 @@
 /**
  * @brief Generate & bind VertexArray object
 */
-VertexArray::VertexArray()
+void VertexArray::init() 
 {
     GL_CALL(glGenVertexArrays(1, &m_ID));
-    GL_CALL(glBindVertexArray(m_ID));
+    GL_CALL(glBindVertexArray(m_ID));    
 }
 
 
 /**
  * @brief Wrapper for glDeleteVertexArrays
 */
-VertexArray::~VertexArray()
+void VertexArray::cleanup()
 {
     GL_CALL(glDeleteVertexArrays(1, &m_ID));
 }

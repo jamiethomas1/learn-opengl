@@ -1,7 +1,7 @@
+#include "checkGLErrors.h"
 #include "window.h"
 
 #include <assert.h>
-#include "checkGLErrors.h"
 
 
 /**

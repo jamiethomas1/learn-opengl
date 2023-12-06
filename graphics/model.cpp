@@ -5,6 +5,8 @@
 #include <glm/ext/matrix_transform.hpp> // for glm::translate()
 #include <glm/gtx/string_cast.hpp>
 
+#include "opengl/renderer.h"
+
 #include <glad/glad.h> //! Temporary. Remove all references to GL enums in the Model class.
 
 
@@ -24,6 +26,8 @@ Model::Model(const glm::vec3 position)
 
     m_Shader.use();
     m_Shader.setInt("tex", 0);
+
+    Renderer::push(this);
 }
 
 

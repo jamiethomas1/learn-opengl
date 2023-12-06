@@ -30,7 +30,7 @@ const int HEIGHT = 600;
  * DONE: Implement a way to get and set rotation of Model matrix. First attempt hasn't worked, need to try again
  * TODO: Abstract matrices (may want to wait until Camera implemented) - Not going to do this until I can see a clear benefit of it
  * TODO: Make Window static so WIDTH and HEIGHT are accessible throughout program
- * TODO: Make Renderer static so I can push Renderables to the renderer in their constructors
+ * DONE: Make Renderer static so I can push Renderables to the renderer in their constructors
  * DONE: Implement an OpenGL error wrapper for all GL calls
  * DONE: Add extensive comments and make code look clear and easy to read
 */
@@ -43,10 +43,7 @@ int main()
      */
 
     const Window *window = new Window(WIDTH, HEIGHT, "LearnOpenGL");
-    Renderer *renderer = new Renderer();
-
-    // Cube *cube = new Cube(glm::vec3(0.f, 0.f, 0.f));
-    // renderer->push(cube);
+    Renderer::init();
 
     Cube* cubePositions[] = {
         new Cube(0.0f, 0.0f, 0.0f),
@@ -67,20 +64,19 @@ int main()
         cubePositions[i]->rotate(angle, glm::vec3(1.f, 0.3f, 0.5f));
         glm::vec3 translationVector = glm::vec3(-1.f, 0.f, 0.f);
         cubePositions[i]->move(translationVector);
-        renderer->push(cubePositions[i]);
     }
 
     while (window->isOpen())
     {
         window->processInput();
         
-        renderer->clear();
-        renderer->draw();
+        Renderer::clear();
+        Renderer::draw();
 
         window->update();
     }
 
-    delete renderer;
+    Renderer::cleanup();
     delete window;
 
     glfwTerminate();

@@ -13,16 +13,18 @@
 class Renderable;
 
 class Renderer {
-private:
-    std::vector<Renderable*> m_RenderQueue;
-    VertexArray *m_VA;
-
 public:
     Renderer();
     ~Renderer();
 
-    void push(Renderable* r);
+    static void init();
+    static void cleanup();
 
-    const void clear() const;
-    const void draw();
+    static VertexArray m_VA;
+    static std::vector<Renderable*> m_RenderQueue;
+
+    static void push(Renderable* r);
+
+    static const void clear();
+    static const void draw();
 };

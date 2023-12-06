@@ -9,8 +9,11 @@ private:
     unsigned int m_ID;
 
 public:
-    VertexArray();
-    ~VertexArray();
+    VertexArray() {}
+    ~VertexArray() {}
+
+    void init();
+    void cleanup();
 
     const void addBuffer(const VertexBuffer &vb, const VertexBufferLayout &layout) const;
     const void bind() const;
