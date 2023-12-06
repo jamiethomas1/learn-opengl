@@ -42,7 +42,8 @@ int main()
      * Initialise objects
      */
 
-    const Window *window = new Window(WIDTH, HEIGHT, "LearnOpenGL");
+    //const Window *window = new Window(WIDTH, HEIGHT, "LearnOpenGL");
+    Window::init(WIDTH, HEIGHT, "LearnOpenGL");
     Renderer::init();
 
     Cube* cubePositions[] = {
@@ -66,18 +67,19 @@ int main()
         cubePositions[i]->move(translationVector);
     }
 
-    while (window->isOpen())
+    while (Window::isOpen())
     {
-        window->processInput();
+        Window::processInput();
         
         Renderer::clear();
         Renderer::draw();
 
-        window->update();
+        Window::update();
     }
 
     Renderer::cleanup();
-    delete window;
+    Window::cleanup();
+    //delete window;
 
     glfwTerminate();
     return 0;

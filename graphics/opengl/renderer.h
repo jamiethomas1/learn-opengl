@@ -14,9 +14,6 @@ class Renderable;
 
 class Renderer {
 public:
-    Renderer();
-    ~Renderer();
-
     static void init();
     static void cleanup();
 
@@ -27,4 +24,7 @@ public:
 
     static const void clear();
     static const void draw();
+private: 
+    Renderer() {}
+    ~Renderer() {}
 };

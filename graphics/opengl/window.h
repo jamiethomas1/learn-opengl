@@ -6,17 +6,19 @@
 #include <iostream>
 
 class Window {
-private:
-    GLFWwindow *m_Window;
-    const unsigned int m_Width, m_Height;
-    const char* m_Title;
-
 public:
+    static GLFWwindow *window;
+    static unsigned int width, height;
+    static std::string title;
+
     Window(const unsigned int width, const unsigned int height, const std::string title);
     ~Window() {}
 
-    const void processInput() const;
-    const void update() const;
+    static void init(const unsigned int width, const unsigned int height, const std::string title);
+    static void cleanup() {}
 
-    const bool isOpen() const;
+    static const void processInput();
+    static const void update();
+
+    static const bool isOpen();
 };

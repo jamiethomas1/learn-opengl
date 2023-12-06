@@ -5,8 +5,7 @@
 #include <glm/ext/matrix_transform.hpp> // for glm::translate()
 #include <glm/ext/matrix_clip_space.hpp>
 
-const int WIDTH = 800, HEIGHT = 600; // ! This is a very temporary solution, the proper fix is likely to make the Window class static
-// * Another solution might be to make a Matrix class, include Window, and make Matrix a friend class to Window.
+#include "window.h"
 
 
 VertexArray Renderer::m_VA;
@@ -65,7 +64,7 @@ const void Renderer::draw()
 {
     m_VA.bind(); // This will probably in future be called in the renderer's constructor (Unless/until multiple VAOs become needed)
     for (Renderable *r : m_RenderQueue) {
-        glm::mat4 projection = glm::perspective(glm::radians(45.f), (float)WIDTH / (float)HEIGHT, 0.1f, 100.f);
+        glm::mat4 projection = glm::perspective(glm::radians(45.f), (float)Window::width / (float)Window::height, 0.1f, 100.f);
         glm::mat4 view = glm::translate(glm::mat4(1.f), glm::vec3(0.f, 0.f, -3.f));
         glm::mat4 mvp = projection * view * r->getModelMatrix();
 

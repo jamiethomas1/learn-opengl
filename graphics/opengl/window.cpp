@@ -4,6 +4,11 @@
 #include <assert.h>
 
 
+GLFWwindow *Window::window;
+unsigned int Window::width, Window::height;
+std::string Window::title;
+
+
 /**
  * @brief Changes viewport size when window is resized
  * @param window Window to be resized
@@ -27,9 +32,12 @@ void glfwErrorCallback(int error, const char* description) {
  * @param height Height of viewport
  * @param title Name of window
 */
-Window::Window(const unsigned int width, const unsigned int height, const std::string title)
-    : m_Width(width), m_Height(height), m_Title(title.c_str())
+void Window::init(const unsigned int winWidth, const unsigned int winHeight, const std::string winTitle)
 {
+    width = winWidth;
+    height = winHeight;
+    title = winTitle;
+
     if (!glfwInit()) {
         std::cerr << "Failed to initialise GLFW" << std::endl;
         throw std::runtime_error("Failed to initialise GLFW");
@@ -40,14 +48,14 @@ Window::Window(const unsigned int width, const unsigned int height, const std::s
 
     glfwSetErrorCallback(glfwErrorCallback);
 
-    m_Window = glfwCreateWindow(m_Width, m_Height, m_Title, NULL, NULL);
-    if (m_Window == NULL)
+    window = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
+    if (window == NULL)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
         assert(false);
     }
-    glfwMakeContextCurrent(m_Window);
+    glfwMakeContextCurrent(window);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
@@ -55,19 +63,19 @@ Window::Window(const unsigned int width, const unsigned int height, const std::s
         assert(false);
     }
 
-    GL_CALL(glViewport(0, 0, m_Width, m_Height));
-    glfwSetFramebufferSizeCallback(m_Window, framebuffer_size_callback);
+    GL_CALL(glViewport(0, 0, width, height));
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 }
 
 
 /**
  * @brief Process input into window.
 */
-const void Window::processInput() const // Probably a temporary location for this function, can see this being expanded into its own file/class.
+const void Window::processInput() // Probably a temporary location for this function, can see this being expanded into its own file/class.
 {
-    if (glfwGetKey(m_Window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
     {
-        glfwSetWindowShouldClose(m_Window, GLFW_TRUE);
+        glfwSetWindowShouldClose(window, GLFW_TRUE);
     }
 }
 
@@ -75,8 +83,8 @@ const void Window::processInput() const // Probably a temporary location for thi
 /**
  * @brief Swap buffers and poll events
 */
-const void Window::update() const {
-    glfwSwapBuffers(m_Window);
+const void Window::update() {
+    glfwSwapBuffers(window);
     glfwPollEvents();
 }
 
@@ -84,6 +92,6 @@ const void Window::update() const {
 /**
  * @brief Returns true unless the user has closed the window
 */
-const bool Window::isOpen() const {
-    return (!glfwWindowShouldClose(m_Window));
+const bool Window::isOpen() {
+    return (!glfwWindowShouldClose(window));
 }
