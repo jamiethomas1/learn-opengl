@@ -12,6 +12,8 @@ class Renderable {
 protected:
     virtual inline void render() = 0;
     void render(const unsigned int indicesCount);
+    
+    virtual inline void update() = 0;
 
 public:
     inline Renderable() {};

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../graphics/model.h"
+#include "../engine/model.h"
 
 
 class Cube : public Model {
@@ -57,6 +57,8 @@ private:
         20, 21, 23,
         21, 22, 23
     };
+
+    void update() override;
 
 public:
     inline Cube() : Cube(glm::vec3(0.f, 0.f, 0.f)) {}

@@ -2,10 +2,10 @@
 #include <glm/ext/matrix_transform.hpp> // for glm::translate()
 #include <glm/ext/matrix_clip_space.hpp> // for glm::perspective()
 
-#include "graphics/opengl/renderer.h"
-#include "graphics/opengl/window.h"
-#include "graphics/opengl/shader.h"
-#include "graphics/opengl/texture.h"
+#include "engine/opengl/renderer.h"
+#include "engine/opengl/window.h"
+#include "engine/opengl/shader.h"
+#include "engine/opengl/texture.h"
 
 #include "sandbox/cube.h"
 
@@ -15,6 +15,7 @@ const int HEIGHT = 600;
 
 /**
  * TODO: Abstract matrices (may want to wait until Camera implemented) - Not going to do this until I can see a clear benefit of it
+ * TODO: Use default texture if invalid path specified
 */
 
 int main()
@@ -39,8 +40,6 @@ int main()
     {
         float angle = 20.f * i;
         cubePositions[i]->rotate(angle, glm::vec3(1.f, 0.3f, 0.5f));
-        glm::vec3 translationVector = glm::vec3(-1.f, 0.f, 0.f);
-        cubePositions[i]->move(translationVector);
     }
 
     while (Window::isOpen())

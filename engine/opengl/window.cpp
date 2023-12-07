@@ -3,6 +3,8 @@
 
 #include <assert.h>
 
+#include "inputManager.h"
+
 
 GLFWwindow *Window::window;
 unsigned int Window::width, Window::height;
@@ -65,6 +67,8 @@ void Window::init(const unsigned int winWidth, const unsigned int winHeight, con
 
     GL_CALL(glViewport(0, 0, width, height));
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+
+    InputManager::init();
 }
 
 
@@ -73,10 +77,7 @@ void Window::init(const unsigned int winWidth, const unsigned int winHeight, con
 */
 const void Window::processInput() // Probably a temporary location for this function, can see this being expanded into its own file/class.
 {
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-    {
-        glfwSetWindowShouldClose(window, GLFW_TRUE);
-    }
+    if (InputManager::isKeyDown(GLFW_KEY_ESCAPE)) glfwSetWindowShouldClose(window, GLFW_TRUE);
 }
 
 
@@ -85,7 +86,7 @@ const void Window::processInput() // Probably a temporary location for this func
 */
 const void Window::update() {
     glfwSwapBuffers(window);
-    glfwPollEvents();
+    InputManager::update();
 }
 
 

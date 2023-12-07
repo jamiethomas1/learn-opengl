@@ -13,3 +13,7 @@ Cube::Cube(glm::vec3 position) : Model(position)
     addTexture("res/container.jpg");
     addTexture("res/awesomeface.png");
 }
+
+void Cube::update() {
+    
+}

@@ -63,9 +63,20 @@ const void Renderer::clear()
 const void Renderer::draw()
 {
     m_VA.bind(); // This will probably in future be called in the renderer's constructor (Unless/until multiple VAOs become needed)
+
+    glm::vec3 cameraPos = glm::vec3(0.f, 0.f, 3.f);
+    glm::vec3 cameraTarget = glm::vec3(0.f);
+    glm::vec3 up = glm::vec3(0.f, 1.f, 0.f);
+    
+    const float radius = 10.f;
+    float camX = sin(glfwGetTime()) * radius;
+    float camZ = cos(glfwGetTime()) * radius;
+    
+    glm::mat4 view = glm::lookAt(glm::vec3(camX, 0.f, camZ), cameraTarget, up);
+
     for (Renderable *r : m_RenderQueue) {
         glm::mat4 projection = glm::perspective(glm::radians(45.f), (float)Window::width / (float)Window::height, 0.1f, 100.f);
-        glm::mat4 view = glm::translate(glm::mat4(1.f), glm::vec3(0.f, 0.f, -3.f));
+        //glm::mat4 view = glm::translate(glm::mat4(1.f), glm::vec3(0.f, 0.f, -3.f));
         glm::mat4 mvp = projection * view * r->getModelMatrix();
 
         r->getShader().use();
