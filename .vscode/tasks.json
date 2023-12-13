@@ -2,19 +2,19 @@
     "tasks": [
         {
             "type": "cppbuild",
-            "label": "C/C++: g++ build active file",
+            "label": "build",
             "command": "/opt/cuda/bin/g++",
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
                 "-std=c++17",
-                "-I./include",
-                "-L./lib",
+                "-I${workspaceFolder}/include",
+                "-L${workspaceFolder}/lib",
                 "${workspaceFolder}/src/*.c",
                 "${workspaceFolder}/engine/*.cpp",
                 "${workspaceFolder}/engine/opengl/*.cpp",
                 "${workspaceFolder}/sandbox/*.cpp",
-                "${workspaceFolder}/*.cpp",
+                "${workspaceFolder}/main.cpp",
                 "-lglfw",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}"
