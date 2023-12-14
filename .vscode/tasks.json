@@ -17,7 +17,7 @@
                 "${workspaceFolder}/main.cpp",
                 "-lglfw",
                 "-o",
-                "${workspaceFolder}/main"
+                "${workspaceFolder}/build/app"
             ],
             "options": {
                 "cwd": "${fileDirname}"
