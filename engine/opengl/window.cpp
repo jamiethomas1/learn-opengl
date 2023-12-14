@@ -6,6 +6,7 @@
 #include "inputManager.h"
 
 
+// Static variables
 GLFWwindow *Window::window;
 unsigned int Window::width, Window::height;
 std::string Window::title;
@@ -23,6 +24,11 @@ void framebuffer_size_callback(GLFWwindow *window, int width, int height)
 }
 
 
+/**
+ * @brief Callback function that logs GLFW error messages
+ * @param error Error code
+ * @param description Error info
+*/
 void glfwErrorCallback(int error, const char* description) {
     std::cerr << "GLFW Error " << error << ": " << description << std::endl;
 }
@@ -69,7 +75,7 @@ void Window::init(const unsigned int winWidth, const unsigned int winHeight, con
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
     InputManager::init();
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); // ? Perhaps put this in InputManager::init()?
 }
 
 

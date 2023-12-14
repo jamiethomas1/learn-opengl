@@ -9,14 +9,15 @@
 #include "window.h"
 
 
+// Static variables
 VertexArray Renderer::m_VA;
 std::vector<Renderable*> Renderer::m_RenderQueue;
-
-float Renderer::deltaTime = 0.f, Renderer::lastFrame = 0.f;
+float Renderer::deltaTime = 0.f;
+float Renderer::lastFrame = 0.f;
 
 
 /**
- * @brief Central Renderer class
+ * @brief Initialise Renderer
 */
 void Renderer::init() 
 {
@@ -27,7 +28,7 @@ void Renderer::init()
 
 
 /**
- * @brief Deletes Renderables in render queue and runs cleanup on VertexArray
+ * @brief Deletes Renderables in render queue and runs cleanup on VertexArray & Camera
 */
 void Renderer::cleanup() 
 {
@@ -43,7 +44,7 @@ void Renderer::cleanup()
  * @brief Push a Renderable object to the render queue
  * @details Renderer::draw() will loop through the queue and call ->render() on each element
  * @param r Pointer to renderable object to be pushed to queue
- * @note Objects passed as arguments will be deleted by the Renderer's destructor
+ * @note Objects passed as arguments will be deleted by Renderer::cleanup()
 */
 void Renderer::push(Renderable *r)
 {
@@ -74,6 +75,7 @@ const void Renderer::draw()
     Renderer::deltaTime = currentFrame - lastFrame;
     Renderer::lastFrame = currentFrame;
 
+    // Allow camera to process input for movement & orientation
     Camera::update();
 
     for (Renderable *r : m_RenderQueue) {

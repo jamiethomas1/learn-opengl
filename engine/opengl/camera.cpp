@@ -5,6 +5,8 @@
 #include "window.h"
 #include "renderer.h"
 
+
+// Static variables
 glm::vec3 Camera::cameraPos = glm::vec3(0.f, 0.f, 3.f);
 glm::vec3 Camera::cameraFront = glm::vec3(0.f, 0.f, -1.f);
 glm::vec3 Camera::cameraUp = glm::vec3(0.f, 1.f, 0.f);
@@ -13,15 +15,27 @@ glm::mat4 Camera::viewMatrix = glm::mat4(1.f);
 float Camera::yaw = -90.f, Camera::pitch = 0.f;
 bool Camera::firstMouse = true;
 
+
+/**
+ * @brief Initialise Camera class
+*/
 void Camera::init()
 {
     Camera::viewMatrix = glm::lookAt(Camera::cameraPos, Camera::cameraPos + Camera::cameraFront, Camera::cameraUp);
 }
 
+
+/**
+ * @brief Clean up Camera class
+*/
 void Camera::cleanup()
 {
 }
 
+
+/**
+ * @brief Run input processing & anything else that the Camera needs to be done every frame
+*/
 void Camera::update() // ? Eventually would like to remove all movement functionality from this class & place into derived classes in either game engine or game.
 {
     // Keyboard
@@ -64,6 +78,14 @@ void Camera::update() // ? Eventually would like to remove all movement function
     Camera::viewMatrix = glm::lookAt(Camera::cameraPos, Camera::cameraPos + Camera::cameraFront, Camera::cameraUp);
 }
 
+
+/**
+ * @brief Set the camera to look at something, from somewhere, from some angle
+ * @param pos Position of Camera in world
+ * @param target Normalised position vector of target // ? is this correct?
+ * @param up What direction is up relative to the Camera?
+ * @return View matrix
+*/
 glm::mat4 Camera::lookAt(const glm::vec3 &pos, const glm::vec3 &target, const glm::vec3 &up)
 {
     Camera::viewMatrix = glm::lookAt(pos, pos + target, up);
