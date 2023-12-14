@@ -22,8 +22,9 @@ Model::Model(const glm::vec3 position, Shader *shader)
 {
     setPosition(m_Position);
     
-    m_Layout.push(GL_FLOAT, 3);
-    m_Layout.push(GL_FLOAT, 2);
+    m_Layout.push(GL_FLOAT, 3); // Position
+    m_Layout.push(GL_FLOAT, 2); // Texture
+    m_Layout.push(GL_FLOAT, 3); // Normal
 
     m_Shader->use();
     m_Shader->setInt("tex", 0);
