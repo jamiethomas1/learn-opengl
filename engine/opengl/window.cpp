@@ -75,7 +75,7 @@ void Window::init(const unsigned int winWidth, const unsigned int winHeight, con
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
     InputManager::init();
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); // ? Perhaps put this in InputManager::init()?
+    //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); // ? Perhaps put this in InputManager::init()?
 }
 
 

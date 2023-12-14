@@ -19,10 +19,16 @@ public:
     inline Renderable() {};
     virtual inline ~Renderable() {}
 
+    enum class Type {
+        MODEL,
+        LIGHT
+    };
+
     virtual inline VertexBuffer& getVertexBuffer() = 0;
     virtual inline VertexBufferLayout& getBufferLayout() = 0;
-    virtual inline Shader& getShader() = 0;
+    virtual inline Shader* getShader() = 0;
     virtual inline const glm::mat4 getModelMatrix() const = 0;
+    virtual inline Type getType() const = 0;
 
     friend class Renderer;
 };

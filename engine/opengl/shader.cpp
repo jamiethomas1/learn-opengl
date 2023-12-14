@@ -3,6 +3,8 @@
 #include "checkGLErrors.h"
 #include <glm/gtc/type_ptr.hpp>
 
+#include <fstream>
+
 
 /**
  * @brief Read shader files into program
@@ -10,7 +12,7 @@
  * @return Raw text string of shader code
 */
 const char* Shader::parseShader(const char *path) const {
-    
+
     /* Shader file reading */
     FILE* shaderFile = fopen(path, "r");
     int fileSize = 0;
@@ -40,6 +42,15 @@ const char* Shader::parseShader(const char *path) const {
 */
 Shader::Shader(const char *vertexPath, const char *fragmentPath)
 {
+    std::ifstream vPath(vertexPath), fPath(fragmentPath);
+    if (!vPath.good()) {
+        vertexPath = "shaders/vDefaultModel.glsl";
+        std::cerr << "Invalid vertex shader path! Using default model shader." << std::endl;
+    }
+    if (!fPath.good()) {
+        fragmentPath = "shaders/fDefaultModel.glsl";
+        std::cerr << "Invalid fragment shader path! Using default model shader." << std::endl;
+    }
 
     // Get shader code as raw text
     const char* vShaderSource = parseShader(vertexPath);

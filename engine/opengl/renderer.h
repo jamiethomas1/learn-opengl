@@ -17,7 +17,8 @@ public:
     static void init();
     static void cleanup();
 
-    static VertexArray m_VA;
+    static VertexArray m_ModelVA;
+    static VertexArray m_LightingVA;
     static std::vector<Renderable*> m_RenderQueue;
 
     static void push(Renderable* r);

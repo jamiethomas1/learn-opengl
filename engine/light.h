@@ -6,14 +6,13 @@
 #include "opengl/indexBuffer.h"
 #include "opengl/vertexBufferLayout.h"
 #include "opengl/shader.h"
-#include "opengl/texture.h"
 
 #include "opengl/renderable.h"
 
 #include <vector>
 
 
-class Model : public Renderable {
+class Light : public Renderable {
 protected:
     glm::vec3 m_Position;
     glm::mat4 m_RotationMatrix;
@@ -22,32 +21,29 @@ protected:
     IndexBuffer m_IB;
     VertexBufferLayout m_Layout;
     Shader *m_Shader;
-    std::vector<Texture*> m_TextureVector;
     glm::mat4 m_ModelMatrix;
 
 public:
-    inline Model() : Model(glm::vec3(0.f, 0.f, 0.f)) {}
-    Model(const glm::vec3 position) : Model(position, new Shader("shaders/vDefaultModel.glsl", "shaders/fDefaultModel.glsl")) {}
-    Model(const glm::vec3 position, Shader *shader);
-    virtual inline ~Model() {}
-
-    void addTexture(const char* texturePath);
-    const void bindTextures() const;
+    inline Light() : Light(glm::vec3(0.f, 0.f, 0.f)) {}
+    Light(const glm::vec3 position);
+    virtual inline ~Light() {}
 
     inline void setVertices(std::vector<float> vertices) { m_VB.setData(vertices); }
     inline void setIndices(std::vector<unsigned int> indices) { m_IB.setData(indices); }
 
     inline VertexBuffer& getVertexBuffer() override { return m_VB; }
     inline VertexBufferLayout& getBufferLayout() override { return m_Layout; }
-    inline Shader *getShader() override { return m_Shader; }
+    inline Shader* getShader() override { return m_Shader; }
 
-    inline Type getType() const override { return Type::MODEL; }
+    inline Type getType() const override { return Type::LIGHT; }
 
     inline const glm::vec3 getPosition() const { return m_Position; }
     void setPosition(const glm::vec3 position);
 
     void setRotation(const float angle, const glm::vec3 axis);
     void setRotation(glm::mat4& rotationMatrix);
+
+    void setScale(const float scaleFactor);
 
     void move(glm::vec3& movement);
     void move(glm::mat4& translationMatrix);
