@@ -47,6 +47,10 @@ Texture::Texture(const char *path, const unsigned int textureUnit)
         GL_CALL(glGenerateMipmap(GL_TEXTURE_2D));
     } else {
         std::cout << "Failed to load texture: " << path << std::endl;
+        m_Path = "res/default.jpg";
+        m_Image = loadImage();
+        GL_CALL(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, m_Image->width, m_Image->height, 0, GL_RGB, GL_UNSIGNED_BYTE, m_Image->data));
+        GL_CALL(glGenerateMipmap(GL_TEXTURE_2D));
     }
 }
 
