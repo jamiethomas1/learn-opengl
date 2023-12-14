@@ -14,8 +14,11 @@ const int WIDTH = 800;
 const int HEIGHT = 600;
 
 /**
+ * DONE: Abstract camera code from Renderer::draw() to static Camera class
  * TODO: Abstract matrices (may want to wait until Camera implemented) - Not going to do this until I can see a clear benefit of it
  * TODO: Use default texture if invalid path specified
+ * DONE: Implement static Camera class
+ * TODO: Implement Scene/Level class. Camera probably to be made non-static and a member of Scene/Level
 */
 
 int main()

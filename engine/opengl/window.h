@@ -21,4 +21,6 @@ public:
     static const void update();
 
     static const bool isOpen();
+
+    static inline const double getTime() { return glfwGetTime(); }
 };

@@ -24,6 +24,8 @@ public:
 
     static const void clear();
     static const void draw();
+
+    static float deltaTime, lastFrame;
 private: 
     Renderer() {}
     ~Renderer() {}
