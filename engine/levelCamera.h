@@ -7,5 +7,5 @@ public:
     inline LevelCamera() {}
     inline ~LevelCamera() {}
 
-    void update();
+    void update() override;
 };

@@ -2,9 +2,12 @@
 
 #include "cube.h"
 #include "cubeLight.h"
+#include "../engine/levelCamera.h"
 
 GameLevel::GameLevel()
 {
+    m_Camera = new LevelCamera(); // ! This is temporary, I need to sort out the structure of Scenes and Levels and whether a Scene should have a SceneCamera at all
+
     Cube *cube = new Cube(0.f, 0.f, 0.f);
     CubeLight *cubeLight = new CubeLight(1.2f, 1.f, 2.f);
 
@@ -20,7 +23,12 @@ GameLevel::~GameLevel()
 }
 
 void GameLevel::update() {
-    for (auto& model : m_Models) model->update();
-    for (auto& light : m_Lights) light->update();
+    for (auto& model : m_Models) {
+        model->getShader()->setVec3f("viewPos", m_Camera->getPos());
+        model->update();
+    }
+    for (auto& light : m_Lights) {
+        light->update();
+    }
     m_Camera->update(); // ? Maybe update in Level or Scene update functions?
 }

@@ -16,6 +16,7 @@
  * * Passing Light position to Model shader: cube.getShader()->setVec3f(light.getPos())
  * * GameLevel will be able to parse a level file to avoid making a new class for each different GameLevel
  * TODO: Read in Cube vertices & indices from file
+ * TODO: Change controls slightly to be like Minecraft flying
  * DONE: Find a new way of implementing VAOs - tutorial wants different VAOs for Models and Lights
  * TODO: In Shader setters, call this->use() at beginning of each function
  * TODO: Explore stripping OpenGL Camera class back and implementing derived versions for Engine & possibly Game levels with movement etc.

@@ -13,6 +13,8 @@ void LevelCamera::update() // ? Eventually would like to remove all movement fun
     if (InputManager::isKeyDown(GLFW_KEY_S)) m_CameraPos -= cameraSpeed * m_CameraFront;
     if (InputManager::isKeyDown(GLFW_KEY_A)) m_CameraPos -= glm::normalize(glm::cross(m_CameraFront, m_CameraUp)) * cameraSpeed;
     if (InputManager::isKeyDown(GLFW_KEY_D)) m_CameraPos += glm::normalize(glm::cross(m_CameraFront, m_CameraUp)) * cameraSpeed;
+    if (InputManager::isKeyDown(GLFW_KEY_SPACE)) m_CameraPos += cameraSpeed * m_CameraUp;
+    if (InputManager::isKeyDown(GLFW_KEY_LEFT_CONTROL)) m_CameraPos -= cameraSpeed * m_CameraUp;
 
     // Mouse
 

@@ -14,6 +14,8 @@ public:
     virtual void update();
 
     glm::mat4 lookAt(const glm::vec3& pos, const glm::vec3& target, const glm::vec3& up);
+
+    inline glm::vec3 getPos() { return m_CameraPos; }
     inline glm::mat4 getViewMatrix() { return m_ViewMatrix; }
 
 protected:
