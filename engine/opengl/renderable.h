@@ -3,6 +3,7 @@
 #include <glm/glm.hpp>
 
 #include "renderer.h" // includes Renderer to allow it access to render()
+#include "scene.h"
 #include "vertexBuffer.h"
 #include "vertexBufferLayout.h"
 #include "shader.h"
@@ -12,8 +13,6 @@ class Renderable {
 protected:
     virtual inline void render() = 0;
     void render(const unsigned int indicesCount);
-    
-    virtual inline void update() = 0;
 
 public:
     inline Renderable() {};
@@ -24,6 +23,8 @@ public:
         LIGHT
     };
 
+    virtual inline void update() = 0;
+
     virtual inline VertexBuffer& getVertexBuffer() = 0;
     virtual inline VertexBufferLayout& getBufferLayout() = 0;
     virtual inline Shader* getShader() = 0;
@@ -31,4 +32,5 @@ public:
     virtual inline Type getType() const = 0;
 
     friend class Renderer;
+    friend class Scene;
 };

@@ -2,6 +2,8 @@
 
 #include <vector>
 
+#include "scene.h"
+#include "sceneCamera.h"
 #include "renderable.h"
 #include "vertexArray.h"
 #include "shader.h"
@@ -11,6 +13,8 @@
  * * in Renderable to be safely declared as a friend
 */
 class Renderable;
+class Scene;
+class SceneCamera;
 
 class Renderer {
 public:
@@ -24,7 +28,10 @@ public:
     static void push(Renderable* r);
 
     static const void clear();
-    static const void draw();
+    
+    static const void drawScene(Scene* scene);
+    static const void drawModels(std::vector<Renderable*> models, SceneCamera *camera);
+    static const void drawLights(std::vector<Renderable*> lights, SceneCamera *camera);
 
     static float deltaTime, lastFrame;
 private: 

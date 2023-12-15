@@ -5,14 +5,13 @@
 #include <glm/ext/matrix_transform.hpp> // for glm::translate()
 #include <glm/ext/matrix_clip_space.hpp>
 
-#include "camera.h"
+//#include "camera.h"
 #include "window.h"
 
 
 // Static variables
 VertexArray Renderer::m_ModelVA;
 VertexArray Renderer::m_LightingVA;
-std::vector<Renderable*> Renderer::m_RenderQueue;
 float Renderer::deltaTime = 0.f;
 float Renderer::lastFrame = 0.f;
 
@@ -25,7 +24,6 @@ void Renderer::init()
     GL_CALL(glEnable(GL_DEPTH_TEST));
     m_ModelVA.init();
     m_LightingVA.init();
-    Camera::init();
 }
 
 
@@ -34,10 +32,6 @@ void Renderer::init()
 */
 void Renderer::cleanup() 
 {
-    for (auto* r : m_RenderQueue) {
-        delete r;
-    }
-    Camera::cleanup();
     m_ModelVA.cleanup();
     m_LightingVA.cleanup();
 }
@@ -63,8 +57,6 @@ void Renderer::push(Renderable *r)
             m_ModelVA.addBuffer(r->getVertexBuffer(), r->getBufferLayout());
             std::cerr << "No Type enum specified in derived class of Renderable. Assuming Type is Model." << std::endl;
     }
-
-    m_RenderQueue.push_back(r); // * Might need separate render queue for lighting? Hope not
 }
 
 
@@ -78,38 +70,43 @@ const void Renderer::clear()
 }
 
 
-/**
- * @brief Calls ->render() on each Renderable in render queue
-*/
-const void Renderer::draw()
+const void Renderer::drawScene(Scene *scene)
 {
     // Calculate deltaTime
     float currentFrame = Window::getTime();
     Renderer::deltaTime = currentFrame - lastFrame;
     Renderer::lastFrame = currentFrame;
 
-    // Allow camera to process input for movement & orientation
-    Camera::update();
+    drawModels(scene->getModels(), scene->getCamera());
+    drawLights(scene->getLights(), scene->getCamera());
+}
 
-    for (Renderable *r : m_RenderQueue) {
-        switch (r->getType()) {
-            case Renderable::Type::MODEL:
-                m_ModelVA.bind();
-                break;
-            case Renderable::Type::LIGHT:
-                m_LightingVA.bind();
-                break;
-            default:
-                m_ModelVA.bind();
-                std::cerr << "No Type enum specified in derived class of Renderable. Assuming Type is Model." << std::endl;
-        }
+const void Renderer::drawModels(std::vector<Renderable *> models, SceneCamera *camera)
+{
+    m_ModelVA.bind();
+    for (auto& model : models) {
         glm::mat4 projection = glm::perspective(glm::radians(45.f), (float)Window::width / (float)Window::height, 0.1f, 100.f);
-        glm::mat4 view = Camera::viewMatrix;
-        glm::mat4 mvp = projection * view * r->getModelMatrix();
+        glm::mat4 view = camera->getViewMatrix();
+        glm::mat4 mvp = projection * view * model->getModelMatrix();
 
-        r->getShader()->use();
-        r->getShader()->setMatrix4x4f("transform", mvp);
+        model->getShader()->use();
+        model->getShader()->setMatrix4x4f("transform", mvp);
         
-        r->render();
+        model->render();
+    }
+}
+
+const void Renderer::drawLights(std::vector<Renderable *> lights, SceneCamera *camera)
+{
+    m_LightingVA.bind();
+    for (auto& light : lights) {
+        glm::mat4 projection = glm::perspective(glm::radians(45.f), (float)Window::width / (float)Window::height, 0.1f, 100.f);
+        glm::mat4 view = camera->getViewMatrix();
+        glm::mat4 mvp = projection * view * light->getModelMatrix();
+
+        light->getShader()->use();
+        light->getShader()->setMatrix4x4f("transform", mvp);
+        
+        light->render();
     }
 }

@@ -7,16 +7,24 @@
 #include "engine/opengl/shader.h"
 #include "engine/opengl/texture.h"
 
-#include "sandbox/cube.h"
-#include "sandbox/cubeLight.h"
+#include "sandbox/gameLevel.h"
+#include "sandbox/manyCubesLevel.h"
 
 
 /**
+ * TODO: Implement Scene/Level class. Camera probably to be made non-static and a member of Scene/Level
+ * * Scene is OpenGL scope, Level and Menu will be Engine scope, and GameLevel/MainMenu/PauseMenu etc. will be Game scope
+ * * Camera to be made non-static, set default LevelCamera in Level (Engine) and developer can specify GameCamera in GameLevel (Game)
+ * * Renderer::renderScene(const Scene& scene) will loop through Scene objects and render them itself (so no Scene::render() needed)
+ * * Renderer::renderScene will call Renderer::renderModels and Renderer::renderLights
+ * * Renderables (i.e. Models or Lights) will take `*this` in their constructors (a pointer to their Scene) and will call Scene::push() instead of Renderer::push()
+ * * Therefore the Scene will maintain an std::vector<Renderable*> m_RenderQueue (or other name) which will have a getter so Renderer can access it
+ * * Passing Light position to Model shader: cube.getShader()->setVec3f(light.getPos())
+ * * GameLevel will be able to parse a level file to avoid making a new class for each different GameLevel
  * TODO: Read in Cube vertices & indices from file
- * TODO: Find a new way of implementing VAOs - tutorial wants different VAOs for Models and Lights
+ * DONE: Find a new way of implementing VAOs - tutorial wants different VAOs for Models and Lights
  * TODO: In Shader setters, call this->use() at beginning of each function
  * TODO: Explore stripping OpenGL Camera class back and implementing derived versions for Engine & possibly Game levels with movement etc.
- * TODO: Implement Scene/Level class. Camera probably to be made non-static and a member of Scene/Level
  * TODO: Abstract matrices (may want to wait until Camera implemented) - Not going to do this until I can see a clear benefit of it
 */
 
@@ -26,34 +34,16 @@ int main()
     Window::init(800, 600, "LearnOpenGL");
     Renderer::init();
 
-    // Cube* cubePositions[] = {
-    //     new Cube(0.0f, 0.0f, 0.0f),
-    //     new Cube(2.0f, 5.0f, -15.0f),
-    //     new Cube(-1.5f, -2.2f, -2.5f),
-    //     new Cube(-3.8f, -2.0f, -12.3f),
-    //     new Cube(2.4f, -0.4f, -3.5f),
-    //     new Cube(-1.7f, 3.0f, -7.5f),
-    //     new Cube(1.3f, -2.0f, -2.5f),
-    //     new Cube(1.5f, 2.0f, -2.5f),
-    //     new Cube(1.5f, 0.2f, -1.5f),
-    //     new Cube(-1.3f, 1.0f, -1.5f)
-    // };
-
-    // for (unsigned int i = 0; i < 10; i++)
-    // {
-    //     float angle = 20.f * i;
-    //     cubePositions[i]->rotate(angle, glm::vec3(1.f, 0.3f, 0.5f));
-    // }
-
-    Cube *cube = new Cube(0.f, 0.f, 0.f);
-    CubeLight *cubeLight = new CubeLight(1.2f, 1.f, 2.f);
+    GameLevel *level = new GameLevel();
+    //ManyCubesLevel *level = new ManyCubesLevel();
 
     while (Window::isOpen())
     {
         Window::processInput();
         
+        level->update();
         Renderer::clear();
-        Renderer::draw();
+        Renderer::drawScene(level);
 
         Window::update();
     }
