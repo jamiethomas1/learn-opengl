@@ -13,12 +13,6 @@
 
 /**
  * TODO: Implement Scene/Level class. Camera probably to be made non-static and a member of Scene/Level
- * * Scene is OpenGL scope, Level and Menu will be Engine scope, and GameLevel/MainMenu/PauseMenu etc. will be Game scope
- * * Camera to be made non-static, set default LevelCamera in Level (Engine) and developer can specify GameCamera in GameLevel (Game)
- * * Renderer::renderScene(const Scene& scene) will loop through Scene objects and render them itself (so no Scene::render() needed)
- * * Renderer::renderScene will call Renderer::renderModels and Renderer::renderLights
- * * Renderables (i.e. Models or Lights) will take `*this` in their constructors (a pointer to their Scene) and will call Scene::push() instead of Renderer::push()
- * * Therefore the Scene will maintain an std::vector<Renderable*> m_RenderQueue (or other name) which will have a getter so Renderer can access it
  * * Passing Light position to Model shader: cube.getShader()->setVec3f(light.getPos())
  * * GameLevel will be able to parse a level file to avoid making a new class for each different GameLevel
  * TODO: Read in Cube vertices & indices from file

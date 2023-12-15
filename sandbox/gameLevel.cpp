@@ -5,9 +5,14 @@
 
 GameLevel::GameLevel()
 {
+    Cube *cube = new Cube(0.f, 0.f, 0.f);
+    CubeLight *cubeLight = new CubeLight(1.2f, 1.f, 2.f);
 
-    m_Models.push_back(new Cube(0.f, 0.f, 0.f)); // ? Could do it this way or could simply declare & initialise new Cube & change Model constructor to push to Scene instead of Renderer
-    m_Lights.push_back(new CubeLight(1.2f, 1.f, 2.f)); // ? Would need to change Cube & Model constructors to require a Scene parameter (and set here to *this). Current way probably more straightforward.
+    cube->getShader()->setVec3f("lightPos", cubeLight->getPosition());
+    cube->getShader()->setMatrix4x4f("model", cube->getModelMatrix());
+
+    m_Models.push_back(cube); // ? Could do it this way or could simply declare & initialise new Cube & change Model constructor to push to Scene instead of Renderer
+    m_Lights.push_back(cubeLight); // ? Would need to change Cube & Model constructors to require a Scene parameter (and set here to *this). Current way probably more straightforward.
 }
 
 GameLevel::~GameLevel()
