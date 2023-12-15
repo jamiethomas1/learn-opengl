@@ -123,6 +123,7 @@ const void Shader::use() const
 */
 const void Shader::setBool(const std::string &name, const bool value) const
 {
+    use();
     GL_CALL(glUniform1i(glGetUniformLocation(m_ID, name.c_str()), (int) value));
 }
 
@@ -134,6 +135,7 @@ const void Shader::setBool(const std::string &name, const bool value) const
 */
 const void Shader::setInt(const std::string &name, const int value) const
 {
+    use();
     GL_CALL(glUniform1i(glGetUniformLocation(m_ID, name.c_str()), value));
 }
 
@@ -145,6 +147,7 @@ const void Shader::setInt(const std::string &name, const int value) const
 */
 const void Shader::setFloat(const std::string &name, const float value) const
 {
+    use();
     GL_CALL(glUniform1f(glGetUniformLocation(m_ID, name.c_str()), value));
 }
 
@@ -156,6 +159,7 @@ const void Shader::setFloat(const std::string &name, const float value) const
 */
 const void Shader::setVec3f(const std::string &name, const glm::vec3 value) const
 {
+    use();
     GL_CALL(glUniform3fv(glGetUniformLocation(m_ID, name.c_str()), 1, glm::value_ptr(value)));
 }
 
@@ -167,5 +171,6 @@ const void Shader::setVec3f(const std::string &name, const glm::vec3 value) cons
 */
 const void Shader::setMatrix4x4f(const std::string &name, const glm::mat4 value) const
 {
+    use();
     GL_CALL(glUniformMatrix4fv(glGetUniformLocation(m_ID, name.c_str()), 1, GL_FALSE, glm::value_ptr(value)));
 }
