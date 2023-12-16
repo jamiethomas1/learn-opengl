@@ -15,6 +15,7 @@
 class Light : public Renderable {
 protected:
     glm::vec3 m_Position;
+    glm::vec3 m_Color;
     glm::mat4 m_RotationMatrix;
 
     VertexBuffer m_VB;
@@ -39,6 +40,8 @@ public:
 
     inline const glm::vec3 getPosition() const { return m_Position; }
     void setPosition(const glm::vec3 position);
+
+    inline glm::vec3 getColor() { return m_Color; }
 
     void setRotation(const float angle, const glm::vec3 axis);
     void setRotation(glm::mat4& rotationMatrix);

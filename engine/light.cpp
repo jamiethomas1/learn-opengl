@@ -16,6 +16,7 @@
  */
 Light::Light(const glm::vec3 position)
     : m_Position(position)
+    , m_Color(1.f, 1.f, 1.f)
     , m_RotationMatrix(glm::mat4(1.f))
     , m_Shader(new Shader("shaders/vDefaultLight.glsl", "shaders/fDefaultLight.glsl"))
 {

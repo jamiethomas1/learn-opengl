@@ -12,14 +12,11 @@
 
 
 /**
- * TODO: Implement Scene/Level class. Camera probably to be made non-static and a member of Scene/Level
- * * Passing Light position to Model shader: cube.getShader()->setVec3f(light.getPos())
- * * GameLevel will be able to parse a level file to avoid making a new class for each different GameLevel
+ * DONE: Give Light class an m_Color member and in GameLevel, do cube->getShader()->setVec3f("lightColor", cubeLight->getColor())
+ * TODO: Make a Material class, and make a Shader method that parses the Material and sets up the Model's Material GLSL struct
  * TODO: Read in Cube vertices & indices from file
  * TODO: Change controls slightly to be like Minecraft flying
- * DONE: Find a new way of implementing VAOs - tutorial wants different VAOs for Models and Lights
- * DONE: In Shader setters, call this->use() at beginning of each function
- * TODO: Properly sort out Camera & Scene logic - not very clear at the moment & a bit hacky
+ * TODO: Build levels in their own files, read into GameLevel class
  * TODO: Abstract matrices (may want to wait until Camera implemented) - Not going to do this until I can see a clear benefit of it
 */
 

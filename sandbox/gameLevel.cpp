@@ -10,10 +10,11 @@ GameLevel::GameLevel()
     CubeLight *cubeLight = new CubeLight(1.2f, 1.f, 2.f);
 
     cube->getShader()->setVec3f("lightPos", cubeLight->getPosition());
+    cube->getShader()->setVec3f("lightColor", cubeLight->getColor());
     cube->getShader()->setMatrix4x4f("model", cube->getModelMatrix());
 
-    m_Models.push_back(cube); // ? Could do it this way or could simply declare & initialise new Cube & change Model constructor to push to Scene instead of Renderer
-    m_Lights.push_back(cubeLight); // ? Would need to change Cube & Model constructors to require a Scene parameter (and set here to *this). Current way probably more straightforward.
+    m_Models.push_back(cube);
+    m_Lights.push_back(cubeLight);
 }
 
 GameLevel::~GameLevel()
@@ -28,5 +29,5 @@ void GameLevel::update() {
     for (auto& light : m_Lights) {
         light->update();
     }
-    m_Camera->update(); // ? Maybe update in Level or Scene update functions?
+    m_Camera->update(); // * So far not necessary but if more than one property of Level needs updating, move to Level::update() and call from here
 }
