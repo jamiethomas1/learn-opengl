@@ -14,6 +14,7 @@
 /**
  * DONE: Give Light class an m_Color member and in GameLevel, do cube->getShader()->setVec3f("lightColor", cubeLight->getColor())
  * TODO: Make a Material class, and make a Shader method that parses the Material and sets up the Model's Material GLSL struct
+ * TODO: Consider making a Light method that takes in a Model parameter (or an array of Models), and applies that Light to the Model's shader - would save the work being done in the GameLevel
  * TODO: Read in Cube vertices & indices from file
  * TODO: Change controls slightly to be like Minecraft flying
  * TODO: Build levels in their own files, read into GameLevel class

@@ -13,7 +13,6 @@ Cube::Cube(glm::vec3 position) : Model(position, new Shader("shaders/vCube.glsl"
     addTexture("res/container.jpg");
     addTexture("res/awesomeface.png");
 
-    m_Shader->use();
     m_Shader->setVec3f("material.ambient", glm::vec3(1.f, 0.5f, 0.31f));
     m_Shader->setVec3f("material.diffuse", glm::vec3(1.f, 0.5f, 0.31f));
     m_Shader->setVec3f("material.specular", glm::vec3(0.5f, 0.5f, 0.5f));

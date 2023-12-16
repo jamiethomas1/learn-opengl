@@ -9,8 +9,13 @@ GameLevel::GameLevel()
     Cube *cube = new Cube(0.f, 0.f, 0.f);
     CubeLight *cubeLight = new CubeLight(1.2f, 1.f, 2.f);
 
-    cube->getShader()->setVec3f("lightPos", cubeLight->getPosition());
+    cube->getShader()->setVec3f("light.position", cubeLight->getPosition());
     cube->getShader()->setVec3f("lightColor", cubeLight->getColor());
+
+    cube->getShader()->setVec3f("light.ambient", glm::vec3(0.2f));
+    cube->getShader()->setVec3f("light.diffuse", glm::vec3(0.5f));
+    cube->getShader()->setVec3f("light.specular", glm::vec3(1.f));
+
     cube->getShader()->setMatrix4x4f("model", cube->getModelMatrix());
 
     m_Models.push_back(cube);
