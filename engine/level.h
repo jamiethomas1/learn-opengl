@@ -12,7 +12,7 @@ public:
 
     inline LevelCamera* getCamera() { return m_Camera; }
 
-    glm::mat4 getViewMatrix() override;
+    glm::mat4 getViewMatrix() override { return m_Camera->getViewMatrix(); }
 
 protected:
     LevelCamera* m_Camera;

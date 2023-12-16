@@ -5,11 +5,10 @@
 #include <glm/glm.hpp>
 
 class Renderable;
-class SceneCamera;
 
 class Scene {
 public:
-    Scene();
+    Scene() {}
     ~Scene() {}
 
     inline virtual void update() = 0;
