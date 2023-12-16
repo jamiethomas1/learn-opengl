@@ -6,8 +6,6 @@
 
 GameLevel::GameLevel()
 {
-    m_Camera = new LevelCamera(); // ! This is temporary, I need to sort out the structure of Scenes and Levels and whether a Scene should have a SceneCamera at all
-
     Cube *cube = new Cube(0.f, 0.f, 0.f);
     CubeLight *cubeLight = new CubeLight(1.2f, 1.f, 2.f);
 

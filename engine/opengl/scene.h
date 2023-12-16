@@ -16,11 +16,9 @@ public:
 
     inline const std::vector<Renderable*> getModels() { return m_Models; }
     inline const std::vector<Renderable*> getLights() { return m_Lights; }
-    inline SceneCamera* getCamera() { return m_Camera; }
-    glm::mat4 getViewMatrix();
+    inline virtual glm::mat4 getViewMatrix() = 0;
 
 protected:
     std::vector<Renderable*> m_Models;
     std::vector<Renderable*> m_Lights;
-    SceneCamera* m_Camera;
 };

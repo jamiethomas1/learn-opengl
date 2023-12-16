@@ -18,8 +18,8 @@
  * TODO: Read in Cube vertices & indices from file
  * TODO: Change controls slightly to be like Minecraft flying
  * DONE: Find a new way of implementing VAOs - tutorial wants different VAOs for Models and Lights
- * TODO: In Shader setters, call this->use() at beginning of each function
- * TODO: Explore stripping OpenGL Camera class back and implementing derived versions for Engine & possibly Game levels with movement etc.
+ * DONE: In Shader setters, call this->use() at beginning of each function
+ * TODO: Properly sort out Camera & Scene logic - not very clear at the moment & a bit hacky
  * TODO: Abstract matrices (may want to wait until Camera implemented) - Not going to do this until I can see a clear benefit of it
 */
 

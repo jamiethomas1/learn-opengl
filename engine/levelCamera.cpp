@@ -1,5 +1,21 @@
 #include "levelCamera.h"
 
+#include "opengl/inputManager.h"
+#include "opengl/window.h"
+#include "opengl/renderer.h"
+
+
+LevelCamera::LevelCamera()
+    : m_CameraPos(glm::vec3(0.f, 0.f, 3.f))
+    , m_CameraFront(glm::vec3(0.f, 0.f, -1.f))
+    , m_CameraUp(glm::vec3(0.f, 1.f, 0.f))
+    , m_ViewMatrix(glm::lookAt(m_CameraPos, m_CameraPos + m_CameraFront, m_CameraUp))
+    , m_Yaw(-90.f)
+    , m_Pitch(0.f)
+    , m_FirstMouse(true)
+{
+}
+
 
 /**
  * @brief Run input processing & anything else that the Camera needs to be done every frame
@@ -46,4 +62,17 @@ void LevelCamera::update() // ? Eventually would like to remove all movement fun
     glfwSetCursorPos(Window::window, Window::width / 2.0, Window::height / 2.0);
 
     m_ViewMatrix = glm::lookAt(m_CameraPos, m_CameraPos + m_CameraFront, m_CameraUp);
+}
+
+/**
+ * @brief Set the camera to look at something, from somewhere, from some angle
+ * @param pos Position of Camera in world
+ * @param target Normalised position vector of target // ? is this correct?
+ * @param up What direction is up relative to the Camera?
+ * @return View matrix
+*/
+glm::mat4 LevelCamera::lookAt(const glm::vec3 &pos, const glm::vec3 &target, const glm::vec3 &up)
+{
+    m_ViewMatrix = glm::lookAt(pos, pos + target, up);
+    return m_ViewMatrix;
 }

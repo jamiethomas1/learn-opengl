@@ -77,16 +77,16 @@ const void Renderer::drawScene(Scene *scene)
     Renderer::deltaTime = currentFrame - lastFrame;
     Renderer::lastFrame = currentFrame;
 
-    drawModels(scene->getModels(), scene->getCamera());
-    drawLights(scene->getLights(), scene->getCamera());
+    drawModels(scene->getModels(), scene);
+    drawLights(scene->getLights(), scene);
 }
 
-const void Renderer::drawModels(std::vector<Renderable *> models, SceneCamera *camera)
+const void Renderer::drawModels(std::vector<Renderable *> models, Scene *scene)
 {
     m_ModelVA.bind();
     for (auto& model : models) {
         glm::mat4 projection = glm::perspective(glm::radians(45.f), (float)Window::width / (float)Window::height, 0.1f, 100.f);
-        glm::mat4 view = camera->getViewMatrix();
+        glm::mat4 view = scene->getViewMatrix();
         glm::mat4 mvp = projection * view * model->getModelMatrix();
 
         model->getShader()->use();
@@ -96,12 +96,12 @@ const void Renderer::drawModels(std::vector<Renderable *> models, SceneCamera *c
     }
 }
 
-const void Renderer::drawLights(std::vector<Renderable *> lights, SceneCamera *camera)
+const void Renderer::drawLights(std::vector<Renderable *> lights, Scene *scene)
 {
     m_LightingVA.bind();
     for (auto& light : lights) {
         glm::mat4 projection = glm::perspective(glm::radians(45.f), (float)Window::width / (float)Window::height, 0.1f, 100.f);
-        glm::mat4 view = camera->getViewMatrix();
+        glm::mat4 view = scene->getViewMatrix();
         glm::mat4 mvp = projection * view * light->getModelMatrix();
 
         light->getShader()->use();

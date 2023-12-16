@@ -3,7 +3,6 @@
 #include <vector>
 
 #include "scene.h"
-#include "sceneCamera.h"
 #include "renderable.h"
 #include "vertexArray.h"
 #include "shader.h"
@@ -14,7 +13,6 @@
 */
 class Renderable;
 class Scene;
-class SceneCamera;
 
 class Renderer {
 public:
@@ -30,8 +28,8 @@ public:
     static const void clear();
     
     static const void drawScene(Scene* scene);
-    static const void drawModels(std::vector<Renderable*> models, SceneCamera *camera);
-    static const void drawLights(std::vector<Renderable*> lights, SceneCamera *camera);
+    static const void drawModels(std::vector<Renderable*> models, Scene *scene);
+    static const void drawLights(std::vector<Renderable*> lights, Scene *scene);
 
     static float deltaTime, lastFrame;
 private: 
